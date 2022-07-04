@@ -9,7 +9,7 @@ namespace BillTrackerClient.App.Models
         [Display(Name = "First name")]
         public string FirstName { get; set; }
         [Required(ErrorMessage = "Last name is required")]
-        [Display(Name = "First name")]
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
         [Required(ErrorMessage = "Phone number is required")]
         [Display(Name = "Phone number")]

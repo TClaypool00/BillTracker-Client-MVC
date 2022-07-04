@@ -11,9 +11,22 @@ namespace BillTrackerClient.App.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model)
         {
-            return View();
+            var result = API<UserModel>.Login(model);
+
+            if (result.GetType() == typeof(UserModel))
+            {
+                UserModel user = (UserModel)result;
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ViewBag.error = result;
+                return View(model);
+            }
         }
 
         [HttpGet]
@@ -22,9 +35,21 @@ namespace BillTrackerClient.App.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var result = API<RegisterModel>.Post(model, "users", API<RegisterModel>.MethodTypes.Post);
+
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("login");
+                }
+            }
+
+            return View(model);
         }
     }
 }
