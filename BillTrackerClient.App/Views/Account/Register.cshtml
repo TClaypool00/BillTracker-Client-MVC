@@ -8,7 +8,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Register">
+        <form id="registerForm">
             <div class="form-group">
                 <input asp-for="FirstName" class="form-control" placeholder="@Html.DisplayNameFor(m => m.FirstName)" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
@@ -45,3 +45,7 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script>
+    $.ajax()
+</script>
