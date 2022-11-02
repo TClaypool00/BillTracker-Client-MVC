@@ -1,13 +1,12 @@
+using BillTrackerClient.App.DataModels;
+using BillTrackerClient.App.Interfaces;
+using BillTrackerClient.App.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BillTrackerClient.App
 {
@@ -24,6 +23,12 @@ namespace BillTrackerClient.App
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IGeneralService, UserService>();
+            services.AddDbContext<BillTrackerContext>(options =>
+            {
+                options.UseMySql(SecretConfig.ConnectionString, ServerVersion.Parse(SecretConfig.Version));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

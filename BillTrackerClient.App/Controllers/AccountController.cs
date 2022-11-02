@@ -1,10 +1,20 @@
-﻿using BillTrackerClient.App.Models;
+﻿using BillTrackerClient.App.Interfaces;
+using BillTrackerClient.App.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace BillTrackerClient.App.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IUserService _service;
+
+        public AccountController(IUserService service)
+        {
+            _service = service;
+        }
+
         [HttpGet]
         public IActionResult Login()
         {
@@ -26,11 +36,21 @@ namespace BillTrackerClient.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public async Task<ActionResult> Register(RegisterModel model)
         {
-            if(ModelState.IsValid)
+            try
             {
-                return Redirect("Login");
+                if (ModelState.IsValid)
+                {
+                    await _service.AddUserAsync(model);
+
+                    return Redirect("Login");
+                }
+
+                return View(model);
+            } catch (Exception e)
+            {
+                ViewBag.error = e.Message;
             }
 
             return View(model);
