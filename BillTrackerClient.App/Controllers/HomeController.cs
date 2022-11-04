@@ -1,15 +1,12 @@
-﻿using BillTrackerClient.App.Models;
+﻿using BillTrackerClient.App.Helpers;
+using BillTrackerClient.App.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BillTrackerClient.App.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ControllerHelper
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -17,7 +14,9 @@ namespace BillTrackerClient.App.Controllers
         {
             _logger = logger;
         }
-
+        
+        [HttpGet]
+        [Authenitcation]
         public IActionResult Index()
         {
             return View();

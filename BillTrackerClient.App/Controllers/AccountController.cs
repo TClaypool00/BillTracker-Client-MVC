@@ -1,12 +1,14 @@
-﻿using BillTrackerClient.App.Interfaces;
+﻿using BillTrackerClient.App.Helpers;
+using BillTrackerClient.App.Interfaces;
 using BillTrackerClient.App.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
 namespace BillTrackerClient.App.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : ControllerHelper
     {
         private readonly IUserService _service;
 
@@ -16,6 +18,7 @@ namespace BillTrackerClient.App.Controllers
         }
 
         [HttpGet]
+        [Anonymous]
         public IActionResult Login()
         {
             return View();
@@ -23,12 +26,35 @@ namespace BillTrackerClient.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model)
+        public async Task<ActionResult> Login(LoginModel model)
         {
-            return RedirectToAction("Index", "Home");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var user = await _service.GetUserByEmailAsync(model.Email);
+
+                    if (BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
+                    {
+                        HttpContext.Session.SetInt32("UserId", user.UserId);
+                        HttpContext.Session.SetString("FirstName", user.FirstName);
+                        HttpContext.Session.SetString("Email", user.Email);
+                        HttpContext.Session.SetString("IsAdmin", user.IsAdmin.ToString());
+                        HttpContext.Session.SetString("PhoneNum", user.PhoneNum);
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+            } catch (Exception e)
+            {
+                ViewBag.error = e.Message;
+            }
+
+            return View(model);
         }
 
         [HttpGet]
+        [Anonymous]
         public ActionResult Register()
         {
             return View();
@@ -42,18 +68,30 @@ namespace BillTrackerClient.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    await _service.AddUserAsync(model);
+                    model.Password = BCrypt.Net.BCrypt.HashPassword(model.Password);
+
+                    await _service.AddUserAsync(model);                    
+
+                    TempData["Success"] = "User has been registered";
 
                     return Redirect("Login");
                 }
-
-                return View(model);
             } catch (Exception e)
             {
                 ViewBag.error = e.Message;
             }
 
             return View(model);
+        }
+
+        [HttpGet]
+        [Authenitcation]
+        public ActionResult LogOut()
+        {
+            HttpContext.Session.Clear();
+            TempData["Success"] = "You have logged out";
+
+            return RedirectToAction("Login");
         }
     }
 }
