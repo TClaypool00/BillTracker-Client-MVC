@@ -28,7 +28,7 @@ namespace BillTrackerClient.App
             services.AddScoped<IGeneralService, UserService>();
             services.AddDbContext<BillTrackerContext>(options =>
             {
-                options.UseMySql(SecretConfig.ConnectionString, ServerVersion.Parse(SecretConfig.Version));
+                options.UseMySql(SecretConfig.ConnectionString, new MySqlServerVersion(new Version(8, 0, 29)));
             });
             services.AddDistributedMemoryCache();
             services.AddSession(options => {

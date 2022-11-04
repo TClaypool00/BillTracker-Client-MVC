@@ -18,7 +18,7 @@ namespace BillTrackerClient.App.Services
 
         public async Task AddUserAsync(RegisterModel model)
         {
-            var user = Mapper.MapUser(model);
+            var user = Mapper.MapUser(model, null, true);
 
             if (user.IsAdmin)
             {
@@ -26,6 +26,7 @@ namespace BillTrackerClient.App.Services
             }
 
             await _billTrackerContext.Users.AddAsync(user);
+            await SaveAsync();
         }
 
         public Task<bool> EmailExistsAsync(string email)
@@ -37,7 +38,7 @@ namespace BillTrackerClient.App.Services
         {
             var dataUser = await _billTrackerContext.Users.FirstOrDefaultAsync(a => a.Email == email);
 
-            return dataUser == null ? null : Mapper.MapUser(dataUser);
+            return dataUser == null ? null : Mapper.MapUser(dataUser, true);
         }
 
         public async Task<UserModel> GetUserByIdAsync(int id)

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 
 namespace BillTrackerClient.App.DataModels
@@ -46,7 +47,7 @@ namespace BillTrackerClient.App.DataModels
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySql(SecretConfig.ConnectionString, ServerVersion.Parse(SecretConfig.Version));
+                optionsBuilder.UseMySql(SecretConfig.ConnectionString, new MySqlServerVersion(new Version(8, 0, 29)));
             }
         }
 

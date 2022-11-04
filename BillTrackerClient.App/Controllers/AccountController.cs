@@ -34,15 +34,24 @@ namespace BillTrackerClient.App.Controllers
                 {
                     var user = await _service.GetUserByEmailAsync(model.Email);
 
-                    if (BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
+                    if (user is null)
                     {
-                        HttpContext.Session.SetInt32("UserId", user.UserId);
-                        HttpContext.Session.SetString("FirstName", user.FirstName);
-                        HttpContext.Session.SetString("Email", user.Email);
-                        HttpContext.Session.SetString("IsAdmin", user.IsAdmin.ToString());
-                        HttpContext.Session.SetString("PhoneNum", user.PhoneNum);
+                        ViewBag.error = "Incorrect email";
+                    } else
+                    {
+                        if (BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
+                        {
+                            HttpContext.Session.SetInt32("UserId", user.UserId);
+                            HttpContext.Session.SetString("FirstName", user.FirstName);
+                            HttpContext.Session.SetString("Email", user.Email);
+                            HttpContext.Session.SetString("IsAdmin", user.IsAdmin.ToString());
+                            HttpContext.Session.SetString("PhoneNum", user.PhoneNum);
 
-                        return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "Home");
+                        } else
+                        {
+                            ViewBag.error = "Incorrect password";
+                        }
                     }
                 }
             } catch (Exception e)
