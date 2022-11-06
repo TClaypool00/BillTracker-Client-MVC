@@ -1,0 +1,29 @@
+﻿@model BillTrackerClient.App.Models.PostModels.AddBillModel
+@{
+    ViewData["Title"] = "Add a Bill";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form formaction="post">
+            <div class="form-group">
+                <input asp-for="BillName" class="form-control" placeholder="@Html.DisplayNameFor(m => m.BillName)" />
+                <span asp-validation-for="BillName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="AmountDue" class="form-control" placeholder="@Html.DisplayNameFor(m => m.AmountDue)" />
+                <span asp-validation-for="AmountDue" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DateDue" />
+                <input asp-for="DateDue" class="form-control" placeholder="@Html.DisplayNameFor(m => m.DateDue)" />
+                <span asp-validation-for="DateDue" class="text-danger"></span>
+            </div>
+        </form>
+    </div>
+</div>
