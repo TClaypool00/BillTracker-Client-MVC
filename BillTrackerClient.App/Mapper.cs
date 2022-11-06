@@ -1,10 +1,49 @@
 ﻿using BillTrackerClient.App.DataModels;
 using BillTrackerClient.App.Models;
+using BillTrackerClient.App.Models.PostModels;
 
 namespace BillTrackerClient.App
 {
     public class Mapper
     {
+        public static Company MapCompany(AddCompanyModel model, int userId)
+        {
+            return new Company
+            {
+                CompanyName = model.CompanyName,
+                UserId = userId
+            };
+        }
+
+        public static CompanyItem MapCompany(Company company)
+        {
+            return new CompanyItem
+            {
+                CompanyName = company.CompanyName,
+                CompanyId = company.CompanyId
+            };
+        }
+
+        public static CompanyModel MapCompanyModel(Company company)
+        {
+            return new CompanyModel
+            {
+                CompanyId = company.CompanyId,
+                CompanyName = company.CompanyName,
+                IsActive = (bool)company.IsActive
+            };
+        }
+
+        public static Company MapCompany(CompanyModel company)
+        {
+            return new Company
+            {
+                CompanyId = company.CompanyId,
+                CompanyName = company.CompanyName,
+                IsActive = (bool)company.IsActive
+            };
+        }
+
         public static User MapUser(RegisterModel model, int? id = null, bool includePassword = false)
         {
             var dataUser = new User
