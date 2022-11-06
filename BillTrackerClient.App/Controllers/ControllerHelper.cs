@@ -5,6 +5,14 @@ namespace BillTrackerClient.App.Controllers
 {
     public class ControllerHelper : Controller
     {
+        protected int UserId
+        {
+            get
+            {
+                return (int)HttpContext.Session.GetInt32("UserId");
+            }
+        }
+
         protected string FirstName
         {
             get
@@ -42,6 +50,14 @@ namespace BillTrackerClient.App.Controllers
             get
             {
                 return GetSessionName("PhoneNum");
+            }
+        }
+
+        protected string ErrorMessage
+        {
+            get
+            {
+                return "Ann error has occured";
             }
         }
 
