@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace BillTrackerClient.App.Models.PostModels
+namespace BillTrackerClient.App.Models.PartialModels
 {
-    public class AddBillModel
+    public class BaseModelClass
     {
-        [Required(ErrorMessage = "Bill name is required")]
-        [MaxLength(255, ErrorMessage = "Bill name  has max length of 255")]
-        [Display(Name = "Bill name")]
-        public string BillName { get; set; }
         [Required(ErrorMessage = "Amount due is required")]
         [DataType(DataType.Currency)]
         [Display(Name = "Amount due")]
@@ -17,9 +13,18 @@ namespace BillTrackerClient.App.Models.PostModels
         [Required(ErrorMessage = "Date due is required")]
         [DataType(DataType.Date)]
         [Display(Name = "Amount due")]
-        public DateTime DateDue { get; set; }
+        public DateOnly DateDue { get; set; }
         [Required(ErrorMessage = "Please select a company Id")]
         public int CompanyId { get; set; }
+        [Display(Name = "Paid?")]
+        public bool IsPaid { get; set; }
+        [Display(Name = "Late? ")]
+        public bool IsLate { get; set; }
+        [Display(Name = "Active?")]
+        public bool IsActive { get; set; }
+        public int UserId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public List<CompanyItem> DropDown { get; set; }
     }
 }

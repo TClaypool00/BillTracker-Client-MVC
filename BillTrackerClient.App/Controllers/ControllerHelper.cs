@@ -60,6 +60,11 @@ namespace BillTrackerClient.App.Controllers
                 return "Ann error has occured";
             }
         }
+        
+        protected ActionResult Home()
+        {
+            return RedirectToAction("Index", "Home");
+        }
 
         private string GetSessionName(string keyName)
         {

@@ -6,6 +6,41 @@ namespace BillTrackerClient.App
 {
     public class Mapper
     {
+        public static Bill MapBill(BillModel model, int id = 0)
+        {
+            var dataBill = new Bill
+            {
+                BillName = model.BillName,
+                AmountDue = model.AmountDue,
+                CompanyId = model.CompanyId
+            };
+
+            if (id != 0)
+            {
+                dataBill.BillId = id;
+            }
+
+            return dataBill;
+        }
+
+        public static BillModel MapBill(Vwbill bill)
+        {
+            return new BillModel
+            {
+                BillId = bill.BillId,
+                BillName = bill.BillName,
+                AmountDue = bill.AmountDue,
+                IsActive = (bool)bill.IsActive,
+                CompanyId = bill.CompanyId,
+                DateDue = bill.DateDue,
+                FirstName = bill.FirstName,
+                LastName = bill.LastName,
+                IsLate = bill.IsLate,
+                IsPaid = bill.IsPaid,
+                UserId = bill.UserId
+            };
+        }
+
         public static Company MapCompany(AddCompanyModel model, int userId)
         {
             return new Company
