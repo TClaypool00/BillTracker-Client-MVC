@@ -11,8 +11,8 @@ namespace BillTrackerClient.App.DataModels
         public decimal MonthlyAmountDue { get; set; }
         public decimal TotalAmountDue { get; set; }
         public decimal RemainingAmount { get; set; }
-        public DateOnly DateDue { get; set; }
-        public DateOnly? DatePaid { get; set; }
+        public DateTime DateDue { get; set; }
+        public DateTime? DatePaid { get; set; }
         public bool IsPaid { get; set; }
         public bool IsLate { get; set; }
         public int CompanyId { get; set; }

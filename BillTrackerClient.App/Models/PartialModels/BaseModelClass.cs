@@ -15,7 +15,7 @@ namespace BillTrackerClient.App.Models.PartialModels
         [Required(ErrorMessage = "Date due is required")]
         [DataType(DataType.Date)]
         [Display(Name = "Date due")]
-        public DateOnly DateDue { get; set; }
+        public DateTime DateDue { get; set; } = DateTime.Now;
         [Required(ErrorMessage = "Please select a company Id")]
         public int CompanyId { get; set; }
         [Display(Name = "Paid?")]

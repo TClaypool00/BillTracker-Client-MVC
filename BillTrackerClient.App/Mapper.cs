@@ -83,7 +83,7 @@ namespace BillTrackerClient.App
             };
         }
 
-        public static Paymenthistory MapHistory(int expenseId, DateOnly date, int typeId, int paymentId = 0, bool? isLate = null, bool? isPaid = null)
+        public static Paymenthistory MapHistory(int expenseId, DateTime date, int typeId, int paymentId = 0, bool? isLate = null, bool? isPaid = null)
         {
             var history = new Paymenthistory
             {

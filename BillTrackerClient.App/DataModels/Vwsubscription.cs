@@ -9,8 +9,8 @@ namespace BillTrackerClient.App.DataModels
         public string Name { get; set; }
         public decimal AmountDue { get; set; }
         public bool? IsActive { get; set; }
-        public DateOnly DateDue { get; set; }
-        public DateOnly? DatePaid { get; set; }
+        public DateTime DateDue { get; set; }
+        public DateTime? DatePaid { get; set; }
         public bool IsPaid { get; set; }
         public bool IsLate { get; set; }
         public int CompanyId { get; set; }

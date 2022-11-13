@@ -8,7 +8,7 @@ namespace BillTrackerClient.App.DataModels
         public int MiscellaneousId { get; set; }
         public string Name { get; set; }
         public decimal Amount { get; set; }
-        public DateOnly DateAdded { get; set; }
+        public DateTime DateAdded { get; set; }
         public int CompanyId { get; set; }
         public string CompanyName { get; set; }
         public int UserId { get; set; }
