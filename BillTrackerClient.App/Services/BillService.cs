@@ -18,17 +18,32 @@ namespace BillTrackerClient.App.Services
             _context = context;
         }
 
-        public async Task<int> AddBillAsync(BillModel model)
+        public async Task<bool> AddBillAsync(BillModel model)
         {
-            var bill = Mapper.MapBill(model);
-            bill.IsActive = true;
+            try
+            {
+                var bill = Mapper.MapBill(model);
+                bill.IsActive = true;
 
-            await _context.Bills.AddAsync(bill);
-            await _context.Paymenthistories.AddAsync(MapHistory(bill.BillId, model.DateDue));
-            await SaveAsync();
+                await _context.Bills.AddAsync(bill);
+                await SaveAsync();
+                try
+                {
+                    await _context.Paymenthistories.AddAsync(Mapper.MapHistory(bill.BillId, model.DateDue, 1));
+                    await SaveAsync();
+                } catch (Exception)
+                {
+                    _context.Bills.Remove(bill);
+                    await SaveAsync();
+                    return false;
+                }
 
-            return bill.BillId;
-
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public Task<bool> BillExistsAsync(int billId)
@@ -61,23 +76,42 @@ namespace BillTrackerClient.App.Services
             await _context.SaveChangesAsync();
         }
 
-        public Task<BillModel> UpdateBillAsync(BillModel model)
+        public async Task<bool> UpdateBillAsync(BillModel model)
         {
-            throw new System.NotImplementedException();
+            var oldBill = await _context.Bills.FirstOrDefaultAsync(b => b.BillId == model.BillId);
+            var newBill = Mapper.MapBill(model);            
+
+            try
+            {
+                _context.Entry(oldBill).CurrentValues.SetValues(newBill);
+                await SaveAsync();
+                try
+                {
+                    var oldHistory = await _context.Paymenthistories.FirstOrDefaultAsync(h => h.ExpenseId == model.BillId && h.ExpenseId == 1 && h.DateDue.Month == DateTime.Now.Month && h.DateDue.Year == DateTime.Now.Year);
+
+                    if (oldHistory.DateDue != model.DateDue)
+                    {
+                        var newHistory = Mapper.MapHistory(model.BillId, model.DateDue, 1, oldHistory.PaymentId, oldHistory.IsLate, oldHistory.IsPaid);
+
+                        _context.Entry(oldHistory).CurrentValues.SetValues(newHistory);
+                        await SaveAsync();
+                    }
+                } catch (Exception)
+                {
+                    _context.Entry(newBill).CurrentValues.SetValues(oldBill);
+                    return false;
+                }
+            } catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public Task<bool> UserHasBillAsync(int billId, int userId)
         {
             return _context.Bills.AnyAsync(b => b.BillId == billId && b.Company.UserId == userId);
-        }
-
-        private static Paymenthistory MapHistory(int expenseId, DateOnly date)
-        {
-            return new Paymenthistory
-            {
-                ExpenseId = expenseId,
-                DateDue = date
-            };
         }
     }
 }

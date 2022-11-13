@@ -8,6 +8,7 @@ namespace BillTrackerClient.App.Models
         public int BillId { get; set; }
         [MaxLength(255, ErrorMessage = "Bill  name has max length of 255 characters")]
         [Required(ErrorMessage = "Bill name is required")]
+        [Display(Name = "Bill name")]
         public string BillName { get; set; }
     }
 }
