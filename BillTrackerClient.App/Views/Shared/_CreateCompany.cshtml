@@ -19,8 +19,10 @@
         e.preventDefault();
 
         if (companyForm.style.display == 'none') {
+            showHideBtn.innerHTML = 'Show Company Form'
             companyForm.style.display = 'block';
         } else {
+            showHideBtn.innerHTML = 'Hide Company Form';
             companyForm.style.display = 'none';
         }
     })
