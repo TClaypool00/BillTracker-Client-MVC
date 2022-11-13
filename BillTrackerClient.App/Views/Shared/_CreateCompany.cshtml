@@ -1,0 +1,53 @@
+﻿<div class="form-group">
+    <button type="button" id="showHideCompanyBtn" class="form-control btn btn-primary">Show Company Form</button>
+</div>
+
+<div class="form-group" id="companyForm" >
+    <input type="text" id="txtCompanyName" class="form-control" placeholder="Company name..." />
+    <button type="button" id="btnAddCompany" class="form-control btn btn-light">Add company</button>
+</div>
+
+<script>
+    const companyForm = document.getElementById('companyForm');
+    const showHideBtn = document.getElementById('showHideCompanyBtn');
+    const companyTextBox = document.getElementById('txtCompanyName');
+    const addCompanyButton = document.getElementById('btnAddCompany');
+    const companyDropDown = document.getElementById('CompanyId');
+    const success = document.getElementById('successMessage')
+
+    showHideBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        if (companyForm.style.display == 'none') {
+            companyForm.style.display = 'block';
+        } else {
+            companyForm.style.display = 'none';
+        }
+    })
+
+    addCompanyButton.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Add", "Companies")',
+            data: { "companyName": companyTextBox.value },
+            dataType : 'json',
+            success : function(resp) {
+                let option = document.createElement('option');
+                option.value = resp.value;
+                option.text = resp.text;
+                option.selected = true;
+                companyDropDown.appendChild(option);
+
+
+                companyTextBox.value = '';
+                success.innerHTML = 'Company was added!';
+
+                
+            },
+            error : function(err) {                
+            }
+        })
+    })
+</script>

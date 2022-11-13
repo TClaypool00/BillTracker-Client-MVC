@@ -1,23 +1,26 @@
 ﻿using BillTrackerClient.App.DataModels;
 using BillTrackerClient.App.Models;
 using BillTrackerClient.App.Models.PostModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.ComponentModel;
 
 namespace BillTrackerClient.App
 {
     public class Mapper
     {
-        public static Bill MapBill(BillModel model, int id = 0)
+        public static Bill MapBill(BillModel model)
         {
             var dataBill = new Bill
             {
                 BillName = model.BillName,
-                AmountDue = model.AmountDue,
+                AmountDue = (decimal)model.AmountDue,
                 CompanyId = model.CompanyId
             };
 
-            if (id != 0)
+            if (model.BillId != 0)
             {
-                dataBill.BillId = id;
+                dataBill.BillId = model.BillId;
             }
 
             return dataBill;
@@ -50,12 +53,13 @@ namespace BillTrackerClient.App
             };
         }
 
-        public static CompanyItem MapCompany(Company company)
+        public static SelectListItem MapCompany(Company company)
         {
-            return new CompanyItem
+            return new SelectListItem
             {
-                CompanyName = company.CompanyName,
-                CompanyId = company.CompanyId
+                Text = company.CompanyName,
+                Value = company.CompanyId.ToString(),
+                Selected = true
             };
         }
 
@@ -77,6 +81,33 @@ namespace BillTrackerClient.App
                 CompanyName = company.CompanyName,
                 IsActive = (bool)company.IsActive
             };
+        }
+
+        public static Paymenthistory MapHistory(int expenseId, DateOnly date, int typeId, int paymentId = 0, bool? isLate = null, bool? isPaid = null)
+        {
+            var history = new Paymenthistory
+            {
+                ExpenseId = expenseId,
+                DateDue = date,
+                TypeId = typeId
+            };
+
+            if (paymentId != 0)
+            {
+                history.PaymentId = paymentId;
+            }
+
+            if (isLate is not null)
+            {
+                history.IsLate = (bool)isLate;
+            }
+
+            if (isPaid is not null)
+            {
+                history.IsPaid = (bool)isPaid;
+            }
+
+            return history;
         }
 
         public static User MapUser(RegisterModel model, int? id = null, bool includePassword = false)

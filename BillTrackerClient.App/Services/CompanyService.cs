@@ -2,6 +2,7 @@
 using BillTrackerClient.App.Interfaces;
 using BillTrackerClient.App.Models;
 using BillTrackerClient.App.Models.PostModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,11 @@ namespace BillTrackerClient.App.Services
             _context = context;
         }
 
-        public async Task<CompanyItem> AddCompanyAsync(AddCompanyModel model, int userId)
+        public async Task<SelectListItem> AddCompanyAsync(AddCompanyModel model, int userId)
         {
             var dataCompany = Mapper.MapCompany(model, userId);
             await _context.AddAsync(dataCompany);
+            await SaveAsync();
 
             return Mapper.MapCompany(dataCompany);
         }
@@ -44,17 +46,17 @@ namespace BillTrackerClient.App.Services
             return companyModels;
         }
 
-        public async Task<List<CompanyItem>> GetCompanyItemsAsync(int userId, int? index = null)
+        public async Task<List<SelectListItem>> GetCompanyItemsAsync(int userId, int? index = null)
         {
             List<Company> companies;
-            var companyItems = new List<CompanyItem>();
+            var companyItems = new List<SelectListItem>();
 
             companies = await GetDataCompaniesAsync(userId, index);
 
-            companyItems.Add(new CompanyItem
+            companyItems.Add(new SelectListItem
             {
-                CompanyId = 0,
-                CompanyName = DefaultValue
+                Value = "",
+                Text = DefaultValue
             });
 
             for (int i = 0; i < companies.Count; i++)

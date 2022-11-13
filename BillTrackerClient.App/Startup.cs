@@ -26,6 +26,8 @@ namespace BillTrackerClient.App
             services.AddControllersWithViews();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IGeneralService, UserService>();
+            services.AddScoped<IBillService, BillService>();
+            services.AddScoped<ICompanyService, CompanyService>();
             services.AddDbContext<BillTrackerContext>(options =>
             {
                 options.UseMySql(SecretConfig.ConnectionString, new MySqlServerVersion(new Version(8, 0, 29)));
