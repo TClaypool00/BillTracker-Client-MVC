@@ -110,6 +110,46 @@ namespace BillTrackerClient.App
             return history;
         }
 
+        public static Loan MapLoan(LoanModel loan)
+        {
+            var dataLoan = new Loan
+            {
+                LoanName = loan.LoanName,
+                CompanyId = loan.CompanyId,
+                IsActive = loan.IsActive,
+                MonthlyAmountDue = (decimal)loan.AmountDue,
+                RemainingAmount = (decimal)loan.RemainingAmount,
+                TotalAmountDue = (decimal)loan.TotalAmountDue
+            };
+
+            if (loan.LoanId != 0)
+            {
+                dataLoan.LoanId = loan.LoanId;
+            }
+
+            return dataLoan;
+        }
+
+        public static LoanModel MapLoan(Vwloan loan)
+        {
+            return new LoanModel
+            {
+                LoanId = loan.LoanId,
+                LoanName = loan.LoanName,
+                CompanyId = loan.CompanyId,
+                IsActive = (bool)loan.IsActive,
+                AmountDue = loan.MonthlyAmountDue,
+                RemainingAmount = loan.RemainingAmount,
+                TotalAmountDue = loan.TotalAmountDue,
+                DateDue = loan.DateDue,
+                IsLate = loan.IsLate,
+                IsPaid = loan.IsPaid,
+                UserId = loan.UserId,
+                FirstName = loan.FirstName,
+                LastName = loan.LastName
+            };
+        }
+
         public static User MapUser(RegisterModel model, int? id = null, bool includePassword = false)
         {
             var dataUser = new User
