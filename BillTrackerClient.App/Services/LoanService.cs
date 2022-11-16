@@ -21,6 +21,7 @@ namespace BillTrackerClient.App.Services
         public async Task<bool> AddLoanAsync(LoanModel loan)
         {
             var dataLoan = Mapper.MapLoan(loan);
+            dataLoan.IsActive = true;
 
             try
             {

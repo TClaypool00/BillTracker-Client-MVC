@@ -20,6 +20,11 @@
             </div>
 
             <div class="form-group">
+                <input asp-for="RemainingAmount" class="form-control" placeholder="@Html.DisplayNameFor(m => m.RemainingAmount)" />
+                <span asp-validation-for="RemainingAmount"></span>
+            </div>
+
+            <div class="form-group">
                 <input asp-for="TotalAmountDue" class="form-control" placeholder="@Html.DisplayNameFor(m => m.TotalAmountDue)" />
                 <span asp-validation-for="TotalAmountDue"></span>
             </div>
@@ -43,3 +48,10 @@
     </div>
 </div>
 
+<script>
+    const amountDueText = document.getElementById('AmountDue');
+
+    window.onload = function() {
+        amountDueText.ariaPlaceholder = 'Monthly Amount Due';
+    }
+</script>
