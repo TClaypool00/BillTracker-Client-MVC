@@ -43,7 +43,6 @@ namespace BillTrackerClient.App.Controllers
                     if (await _service.AddBillAsync(model))
                     {
                         TempData["success"] = "Bill was added";
-                        ViewBag.Success = TempData["success"];
 
                         return Home();
                     } else
