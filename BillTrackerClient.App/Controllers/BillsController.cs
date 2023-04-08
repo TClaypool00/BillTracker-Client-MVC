@@ -49,14 +49,13 @@ namespace BillTrackerClient.App.Controllers
                     {
                         ViewBag.error = "Bill could not be added";
                     }
-
-                    return Home();
                 }
             } catch (Exception)
             {
-                model.DropDown = await _companyService.GetCompanyItemsAsync(UserId);
                 ViewBag.error = ErrorMessage;
             }
+
+            model.DropDown = await _companyService.GetCompanyItemsAsync(UserId);
 
             return View(model);
         }
