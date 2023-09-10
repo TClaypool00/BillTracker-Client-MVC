@@ -14,6 +14,10 @@ namespace BillTrackerClient.App.DataModels
         {
         }
 
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -24,9 +28,7 @@ namespace BillTrackerClient.App.DataModels
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //OnModelCreatingPartial(modelBuilder);
-        }
 
-        //partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        }
     }
 }
