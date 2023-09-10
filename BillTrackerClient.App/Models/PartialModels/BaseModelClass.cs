@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -8,12 +9,13 @@ namespace BillTrackerClient.App.Models.PartialModels
     {
         [Required(ErrorMessage = "Amount due is required")]
         [DataType(DataType.Currency)]
+        [Range(0.01, int.MaxValue, ErrorMessage = "Amount due is not in range")]
         [Display(Name = "Amount due")]
-        public decimal AmountDue { get; set; }
+        public decimal? AmountDue { get; set; }
         [Required(ErrorMessage = "Date due is required")]
         [DataType(DataType.Date)]
-        [Display(Name = "Amount due")]
-        public DateOnly DateDue { get; set; }
+        [Display(Name = "Date due")]
+        public DateTime DateDue { get; set; } = DateTime.Now;
         [Required(ErrorMessage = "Please select a company Id")]
         public int CompanyId { get; set; }
         [Display(Name = "Paid?")]
@@ -25,6 +27,6 @@ namespace BillTrackerClient.App.Models.PartialModels
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public List<CompanyItem> DropDown { get; set; }
+        public List<SelectListItem> DropDown { get; set; }
     }
 }

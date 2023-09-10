@@ -19,6 +19,10 @@ namespace BillTrackerClient.App.Controllers
         [Authenitcation]
         public IActionResult Index()
         {
+            if (TempData["success"] != null) {
+                ViewBag.success = TempData["success"];
+            }
+
             return View();
         }
 

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace BillTrackerClient.App.Controllers
 {
-    [Produces("application/json")]
     public class CompaniesController : ControllerHelper
     {
         private readonly ICompanyService _service;
@@ -17,14 +16,17 @@ namespace BillTrackerClient.App.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Add(AddCompanyModel model)
         {
             try
             {
-                var company = await _service.AddCompanyAsync(model, UserId);
+                if (ModelState.IsValid) {
+                    var company = await _service.AddCompanyAsync(model, UserId);
 
-                return Ok(company);
+                    return Ok(company);
+                } else {
+                    return BadRequest("Name is empty");
+                }
             } catch (Exception e)
             {
                 return StatusCode(500, e.Message);

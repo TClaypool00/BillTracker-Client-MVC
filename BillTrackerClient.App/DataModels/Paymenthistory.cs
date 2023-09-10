@@ -9,8 +9,8 @@ namespace BillTrackerClient.App.DataModels
         public int ExpenseId { get; set; }
         public int TypeId { get; set; }
         public bool IsPaid { get; set; }
-        public DateOnly DateDue { get; set; }
-        public DateOnly? DatePaid { get; set; }
+        public DateTime DateDue { get; set; }
+        public DateTime? DatePaid { get; set; }
         public bool IsLate { get; set; }
 
         public virtual Type Type { get; set; }

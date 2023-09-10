@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace BillTrackerClient.App.Controllers
 {
-    public class BillsController : ControllerHelper
+    public class LoansController : ControllerHelper
     {
-        private readonly IBillService _service;
+        private readonly ILoanService _service;
         private readonly ICompanyService _companyService;
 
-        public BillsController(IBillService service, ICompanyService companyService)
+        public LoansController(ILoanService service, ICompanyService companyService)
         {
             _service = service;
             _companyService = companyService;
@@ -22,35 +22,33 @@ namespace BillTrackerClient.App.Controllers
         [Authenitcation]
         public async Task<ActionResult> Add()
         {
-            var bill = new BillModel
+            var model = new LoanModel
             {
                 DropDown = await _companyService.GetCompanyItemsAsync(UserId)
             };
 
-            return View(bill);
+            return View(model);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Add(BillModel model)
+        [Authenitcation]
+        public async Task<ActionResult> Add(LoanModel model)
         {
-            model.UserId = UserId;
-
             try
             {
                 if (ModelState.IsValid)
                 {
-                    if (await _service.AddBillAsync(model))
+                    if (await _service.AddLoanAsync(model))
                     {
-                        TempData["success"] = "Bill was added";
+                        TempData["success"] = "Loan has been added";
 
                         return Home();
                     } else
                     {
-                        ViewBag.error = "Bill could not be added";
+                        ViewBag.error = "Loan could not be added";
                     }
                 }
-            } catch (Exception)
+            } catch(Exception)
             {
                 ViewBag.error = ErrorMessage;
             }
