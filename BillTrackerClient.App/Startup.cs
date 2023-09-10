@@ -1,6 +1,4 @@
 using BillTrackerClient.App.DataModels;
-using BillTrackerClient.App.Interfaces;
-using BillTrackerClient.App.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,11 +22,6 @@ namespace BillTrackerClient.App
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IGeneralService, UserService>();
-            services.AddScoped<IBillService, BillService>();
-            services.AddScoped<ICompanyService, CompanyService>();
-            services.AddScoped<ILoanService, LoanService>();
             services.AddDbContext<BillTrackerContext>(options =>
             {
                 options.UseMySql(SecretConfig.ConnectionString, new MySqlServerVersion(new Version(8, 0, 29)));

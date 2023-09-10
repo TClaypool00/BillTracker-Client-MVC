@@ -1,5 +1,4 @@
-﻿using BillTrackerClient.App.Helpers;
-using BillTrackerClient.App.Models;
+﻿using BillTrackerClient.App.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
@@ -16,7 +15,6 @@ namespace BillTrackerClient.App.Controllers
         }
         
         [HttpGet]
-        [Authenitcation]
         public IActionResult Index()
         {
             if (TempData["success"] != null) {
