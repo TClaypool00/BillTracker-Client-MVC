@@ -2,6 +2,7 @@
 using BillTrackerClient.App.Interfaces;
 using BillTrackerClient.App.Models;
 using BillTrackerClient.App.Models.PostModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace BillTrackerClient.App.Services
             _context = context;
         }
 
-        public Task<CompanyItem> AddCompanyAsync(AddCompanyModel model, int userId)
+        public Task<SelectListItem> AddCompanyAsync(AddCompanyModel model, int userId)
         {
             //var dataCompany = Mapper.MapCompany(model, userId);
             //await _context.AddAsync(dataCompany);
@@ -49,7 +50,7 @@ namespace BillTrackerClient.App.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<CompanyItem>> GetCompanyItemsAsync(int userId, int? index = null)
+        public Task<List<SelectListItem>> GetCompanyItemsAsync(int userId, int? index = null)
         {
             //List<Company> companies;
             //var companyItems = new List<CompanyItem>();

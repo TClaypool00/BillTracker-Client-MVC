@@ -18,64 +18,70 @@ namespace BillTrackerClient.App.Services
             _context = context;
         }
 
-        public async Task<bool> AddLoanAsync(LoanModel loan)
+        public Task<bool> AddLoanAsync(LoanModel loan)
         {
-            var dataLoan = Mapper.MapLoan(loan);
-            dataLoan.IsActive = true;
+            //var dataLoan = Mapper.MapLoan(loan);
+            //dataLoan.IsActive = true;
 
-            try
-            {
-                await _context.Loans.AddAsync(dataLoan);
-                await SaveAsync();
-                try
-                {
-                    await _context.Paymenthistories.AddAsync(Mapper.MapHistory(dataLoan.LoanId, loan.DateDue, 2));
-                    await SaveAsync();
-                }
-                catch(Exception)
-                {
-                    _context.Loans.Remove(dataLoan);
-                    await SaveAsync();
+            //try
+            //{
+            //    await _context.Loans.AddAsync(dataLoan);
+            //    await SaveAsync();
+            //    try
+            //    {
+            //        await _context.Paymenthistories.AddAsync(Mapper.MapHistory(dataLoan.LoanId, loan.DateDue, 2));
+            //        await SaveAsync();
+            //    }
+            //    catch(Exception)
+            //    {
+            //        _context.Loans.Remove(dataLoan);
+            //        await SaveAsync();
 
-                    return false;
-                }
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            //        return false;
+            //    }
+            //}
+            //catch (Exception)
+            //{
+            //    return false;
+            //}
 
-            return true;
+            //return true;
+
+            throw new NotImplementedException();
         }
 
-        public async Task<LoanModel> GetLoanAsync(int loanId)
+        public Task<LoanModel> GetLoanAsync(int loanId)
         {
-            return Mapper.MapLoan(await _context.Vwloans.FirstOrDefaultAsync(l => l.LoanId == loanId));
+            //return Mapper.MapLoan(await _context.Vwloans.FirstOrDefaultAsync(l => l.LoanId == loanId));
+
+            throw new NotImplementedException();
         }
 
-        public async Task<List<LoanModel>> GetLoansAsync(int userId, int? index = null)
+        public Task<List<LoanModel>> GetLoansAsync(int userId, int? index = null)
         {
-            List<Vwloan> loans;
-            var loanModels = new List<LoanModel>();
+            //List<Vwloan> loans;
+            //var loanModels = new List<LoanModel>();
 
 
-            if (await _context.Vwloans.CountAsync() <= 10)
-            {
-                loans = await _context.Vwloans.Where(l => l.UserId == userId).ToListAsync();
-            } else
-            {
-                loans = await _context.Vwloans.Where(l => l.UserId == userId)
-                    .Take(10)
-                    .Skip((int)index * 10)
-                    .ToListAsync();
-            }
+            //if (await _context.Vwloans.CountAsync() <= 10)
+            //{
+            //    loans = await _context.Vwloans.Where(l => l.UserId == userId).ToListAsync();
+            //} else
+            //{
+            //    loans = await _context.Vwloans.Where(l => l.UserId == userId)
+            //        .Take(10)
+            //        .Skip((int)index * 10)
+            //        .ToListAsync();
+            //}
 
-            for (int i = 0; i < loans.Count; i++)
-            {
-                loanModels.Add(Mapper.MapLoan(loans[i]));
-            }
+            //for (int i = 0; i < loans.Count; i++)
+            //{
+            //    loanModels.Add(Mapper.MapLoan(loans[i]));
+            //}
 
-            return loanModels;
+            //return loanModels;
+
+            throw new NotImplementedException();
         }
 
         public Task<bool> LoanExistsAsync(int loanId)
@@ -88,45 +94,49 @@ namespace BillTrackerClient.App.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> UpdateLoanAsync(LoanModel loan)
+        public Task<bool> UpdateLoanAsync(LoanModel loan)
         {
-            var newloan = Mapper.MapLoan(loan);
-            var oldLoan = await _context.Loans.FirstOrDefaultAsync(l => l.LoanId == loan.LoanId);
-            Paymenthistory oldHistory;
-            Paymenthistory newHistory;
+            //var newloan = Mapper.MapLoan(loan);
+            //var oldLoan = await _context.Loans.FirstOrDefaultAsync(l => l.LoanId == loan.LoanId);
+            //Paymenthistory oldHistory;
+            //Paymenthistory newHistory;
 
-            try
-            {
-                _context.Entry(oldLoan).CurrentValues.SetValues(newloan);
-                await SaveAsync();
+            //try
+            //{
+            //    _context.Entry(oldLoan).CurrentValues.SetValues(newloan);
+            //    await SaveAsync();
 
-                try
-                {
-                    oldHistory = await _context.Paymenthistories.FirstOrDefaultAsync(h => h.ExpenseId == loan.LoanId && h.TypeId == 2 && h.DateDue.Month == DateTime.Now.Month && h.DateDue.Year == DateTime.Now.Year);
-                    newHistory = Mapper.MapHistory(loan.LoanId, loan.DateDue, 2, oldHistory.PaymentId, oldHistory.IsLate, oldHistory.IsPaid);
+            //    try
+            //    {
+            //        oldHistory = await _context.Paymenthistories.FirstOrDefaultAsync(h => h.ExpenseId == loan.LoanId && h.TypeId == 2 && h.DateDue.Month == DateTime.Now.Month && h.DateDue.Year == DateTime.Now.Year);
+            //        newHistory = Mapper.MapHistory(loan.LoanId, loan.DateDue, 2, oldHistory.PaymentId, oldHistory.IsLate, oldHistory.IsPaid);
 
-                    _context.Entry(oldHistory).CurrentValues.SetValues(newHistory);
-                    await SaveAsync();
-                }
-                catch (Exception)
-                {
-                    _context.Entry(newloan).CurrentValues.SetValues(oldLoan);
-                    await SaveAsync();
+            //        _context.Entry(oldHistory).CurrentValues.SetValues(newHistory);
+            //        await SaveAsync();
+            //    }
+            //    catch (Exception)
+            //    {
+            //        _context.Entry(newloan).CurrentValues.SetValues(oldLoan);
+            //        await SaveAsync();
 
-                    return false;
-                }
+            //        return false;
+            //    }
 
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            //    return true;
+            //}
+            //catch (Exception)
+            //{
+            //    return false;
+            //}
+
+            throw new NotImplementedException();
         }
 
         public Task<bool> UserHasLoanAsync(int loanId, int userId)
         {
-            return _context.Vwloans.AnyAsync(l => l.LoanId == loanId && l.UserId == userId);
+            //return _context.Vwloans.AnyAsync(l => l.LoanId == loanId && l.UserId == userId);
+
+            throw new NotImplementedException();
         }
     }
 }

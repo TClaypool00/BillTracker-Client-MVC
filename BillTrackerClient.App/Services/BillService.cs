@@ -18,7 +18,7 @@ namespace BillTrackerClient.App.Services
             _context = context;
         }
 
-        public Task<int> AddBillAsync(BillModel model)
+        public Task<bool> AddBillAsync(BillModel model)
         {
             //var bill = Mapper.MapBill(model);
             //bill.IsActive = true;
@@ -66,7 +66,7 @@ namespace BillTrackerClient.App.Services
             await _context.SaveChangesAsync();
         }
 
-        public Task<BillModel> UpdateBillAsync(BillModel model)
+        public Task<bool> UpdateBillAsync(BillModel model)
         {
             throw new System.NotImplementedException();
         }
@@ -81,7 +81,7 @@ namespace BillTrackerClient.App.Services
             return new Paymenthistory
             {
                 ExpenseId = expenseId,
-                DateDue = date
+                //DateDue = date
             };
         }
     }
