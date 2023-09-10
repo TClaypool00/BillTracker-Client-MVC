@@ -3,6 +3,7 @@ using BillTrackerClient.App.Interfaces;
 using BillTrackerClient.App.Models;
 using BillTrackerClient.App.Models.PostModels;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,12 +19,14 @@ namespace BillTrackerClient.App.Services
             _context = context;
         }
 
-        public async Task<CompanyItem> AddCompanyAsync(AddCompanyModel model, int userId)
+        public Task<CompanyItem> AddCompanyAsync(AddCompanyModel model, int userId)
         {
-            var dataCompany = Mapper.MapCompany(model, userId);
-            await _context.AddAsync(dataCompany);
+            //var dataCompany = Mapper.MapCompany(model, userId);
+            //await _context.AddAsync(dataCompany);
 
-            return Mapper.MapCompany(dataCompany);
+            //return Mapper.MapCompany(dataCompany);
+
+            throw new NotImplementedException();
         }
 
         public Task<bool> CompanyExistsAsync(int id)
@@ -31,38 +34,42 @@ namespace BillTrackerClient.App.Services
             return _context.Companies.AnyAsync(c => c.CompanyId == id);
         }
 
-        public async Task<List<CompanyModel>> GetCompaniesAsync(int userId, int? index = null)
+        public Task<List<CompanyModel>> GetCompaniesAsync(int userId, int? index = null)
         {
-            var companies = await GetDataCompaniesAsync(userId, index);
-            var companyModels = new List<CompanyModel>();
+            //var companies = await GetDataCompaniesAsync(userId, index);
+            //var companyModels = new List<CompanyModel>();
 
-            for (int i = 0; i < companies.Count; i++)
-            {
-                companyModels.Add(Mapper.MapCompanyModel(companies[i]));
-            }
+            //for (int i = 0; i < companies.Count; i++)
+            //{
+            //    companyModels.Add(Mapper.MapCompanyModel(companies[i]));
+            //}
 
-            return companyModels;
+            //return companyModels;
+
+            throw new NotImplementedException();
         }
 
-        public async Task<List<CompanyItem>> GetCompanyItemsAsync(int userId, int? index = null)
+        public Task<List<CompanyItem>> GetCompanyItemsAsync(int userId, int? index = null)
         {
-            List<Company> companies;
-            var companyItems = new List<CompanyItem>();
+            //List<Company> companies;
+            //var companyItems = new List<CompanyItem>();
 
-            companies = await GetDataCompaniesAsync(userId, index);
+            //companies = await GetDataCompaniesAsync(userId, index);
 
-            companyItems.Add(new CompanyItem
-            {
-                CompanyId = 0,
-                CompanyName = DefaultValue
-            });
+            //companyItems.Add(new CompanyItem
+            //{
+            //    CompanyId = 0,
+            //    CompanyName = DefaultValue
+            //});
 
-            for (int i = 0; i < companies.Count; i++)
-            {
-                companyItems.Add(Mapper.MapCompany(companies[i]));
-            }
+            //for (int i = 0; i < companies.Count; i++)
+            //{
+            //    companyItems.Add(Mapper.MapCompany(companies[i]));
+            //}
 
-            return companyItems;
+            //return companyItems;
+
+            throw new NotImplementedException();
         }
 
         public async Task SaveAsync()
@@ -70,16 +77,18 @@ namespace BillTrackerClient.App.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<CompanyModel> UpdateCompanyAsync(int id, CompanyModel model)
+        public Task<CompanyModel> UpdateCompanyAsync(int id, CompanyModel model)
         {
-            var oldCompany = await _context.Companies.FirstOrDefaultAsync(c => c.CompanyId == id);
-            var newCompany = Mapper.MapCompany(model);
+            //var oldCompany = await _context.Companies.FirstOrDefaultAsync(c => c.CompanyId == id);
+            //var newCompany = Mapper.MapCompany(model);
 
-            _context.Entry(oldCompany).CurrentValues.SetValues(oldCompany);
+            //_context.Entry(oldCompany).CurrentValues.SetValues(oldCompany);
 
-            await SaveAsync();
+            //await SaveAsync();
 
-            return model;
+            //return model;
+
+            throw new NotImplementedException();
 
         }
 

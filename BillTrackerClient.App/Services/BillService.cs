@@ -18,16 +18,18 @@ namespace BillTrackerClient.App.Services
             _context = context;
         }
 
-        public async Task<int> AddBillAsync(BillModel model)
+        public Task<int> AddBillAsync(BillModel model)
         {
-            var bill = Mapper.MapBill(model);
-            bill.IsActive = true;
+            //var bill = Mapper.MapBill(model);
+            //bill.IsActive = true;
 
-            await _context.Bills.AddAsync(bill);
-            await _context.Paymenthistories.AddAsync(MapHistory(bill.BillId, model.DateDue));
-            await SaveAsync();
+            //await _context.Bills.AddAsync(bill);
+            //await _context.Paymenthistories.AddAsync(MapHistory(bill.BillId, model.DateDue));
+            //await SaveAsync();
 
-            return bill.BillId;
+            //return bill.BillId;
+
+            throw new NotImplementedException();
 
         }
 
@@ -36,24 +38,27 @@ namespace BillTrackerClient.App.Services
             return _context.Bills.AnyAsync(a => a.BillId == billId);
         }
 
-        public async Task<BillModel> GetBillByIdAsync(int billId)
+        public Task<BillModel> GetBillByIdAsync(int billId)
         {
-            return Mapper.MapBill(await _context.Vwbills.FirstOrDefaultAsync(b => b.BillId == billId)); 
+            throw new NotImplementedException();
+            //return Mapper.MapBill(await _context.Vwbills.FirstOrDefaultAsync(b => b.BillId == billId)); 
         }
 
-        public async Task<List<BillModel>> GetBillsAsync(int userId)
+        public Task<List<BillModel>> GetBillsAsync(int userId)
         {
-            var dataBills = await _context.Vwbills.Where(b => b.UserId == userId).ToListAsync();
-            var bills = new List<BillModel>();
-            Vwbill bill;
+            //var dataBills = await _context.Vwbills.Where(b => b.UserId == userId).ToListAsync();
+            //var bills = new List<BillModel>();
+            //Vwbill bill;
 
-            for (int i = 0; i < dataBills.Count; i++)
-            {
-                bill = dataBills[i];
-                bills.Add(Mapper.MapBill(bill));
-            }
+            //for (int i = 0; i < dataBills.Count; i++)
+            //{
+            //    bill = dataBills[i];
+            //    bills.Add(Mapper.MapBill(bill));
+            //}
 
-            return bills;
+            //return bills;
+
+            throw new NotImplementedException();
         }
 
         public async Task SaveAsync()

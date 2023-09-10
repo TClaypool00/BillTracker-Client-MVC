@@ -2,6 +2,7 @@
 using BillTrackerClient.App.Interfaces;
 using BillTrackerClient.App.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,17 +17,19 @@ namespace BillTrackerClient.App.Services
             _billTrackerContext = billTrackerContext;
         }
 
-        public async Task AddUserAsync(RegisterModel model)
+        public Task AddUserAsync(RegisterModel model)
         {
-            var user = Mapper.MapUser(model, null, true);
+            //var user = Mapper.MapUser(model, null, true);
 
-            if (user.IsAdmin)
-            {
-                user.IsAdmin = false;
-            }
+            //if (user.IsAdmin)
+            //{
+            //    user.IsAdmin = false;
+            //}
 
-            await _billTrackerContext.Users.AddAsync(user);
-            await SaveAsync();
+            //await _billTrackerContext.Users.AddAsync(user);
+            //await SaveAsync();
+
+            throw new NotImplementedException();
         }
 
         public Task<bool> EmailExistsAsync(string email)
@@ -34,31 +37,37 @@ namespace BillTrackerClient.App.Services
             return _billTrackerContext.Users.AnyAsync(a => a.Email == email);
         }
 
-        public async Task<UserModel> GetUserByEmailAsync(string email)
+        public Task<UserModel> GetUserByEmailAsync(string email)
         {
-            var dataUser = await _billTrackerContext.Users.FirstOrDefaultAsync(a => a.Email == email);
+            //var dataUser = await _billTrackerContext.Users.FirstOrDefaultAsync(a => a.Email == email);
 
-            return dataUser == null ? null : Mapper.MapUser(dataUser, true);
+            //return dataUser == null ? null : Mapper.MapUser(dataUser, true);
+
+            throw new NotImplementedException();
         }
 
-        public async Task<UserModel> GetUserByIdAsync(int id)
+        public Task<UserModel> GetUserByIdAsync(int id)
         {
-            return Mapper.MapUser(await GetUserAsync(id));
+            //return Mapper.MapUser(await GetUserAsync(id));
+
+            throw new NotImplementedException();
         }
 
-        public async Task<List<UserModel>> GetUsersAsync(int index)
+        public Task<List<UserModel>> GetUsersAsync(int index)
         {
-            var dataUsers = await _billTrackerContext.Users.ToListAsync();
-            var users = new List<UserModel>();
-            User user;
+            //var dataUsers = await _billTrackerContext.Users.ToListAsync();
+            //var users = new List<UserModel>();
+            //User user;
 
-            for (int i = 0; i < dataUsers.Count; i++)
-            {
-                user = dataUsers[i];
-                users.Add(Mapper.MapUser(user));
-            }
+            //for (int i = 0; i < dataUsers.Count; i++)
+            //{
+            //    user = dataUsers[i];
+            //    users.Add(Mapper.MapUser(user));
+            //}
 
-            return users;
+            //return users;
+
+            throw new NotImplementedException();
         }
 
         public Task<bool> PhoneNumberExistsAsync(string phoneNumber)
@@ -77,16 +86,18 @@ namespace BillTrackerClient.App.Services
             await _billTrackerContext.SaveChangesAsync();
         }
 
-        public async Task<UserModel> UpdateUserAsync(int id, UserModel model)
+        public Task<UserModel> UpdateUserAsync(int id, UserModel model)
         {
-            var oldUser = await GetUserAsync(id);
-            var newUser = Mapper.MapUser(model);
+            //var oldUser = await GetUserAsync(id);
+            //var newUser = Mapper.MapUser(model);
 
-            _billTrackerContext.Entry(oldUser).CurrentValues.SetValues(newUser);
+            //_billTrackerContext.Entry(oldUser).CurrentValues.SetValues(newUser);
 
-            await SaveAsync();
+            //await SaveAsync();
 
-            return model;
+            //return model;
+
+            throw new NotImplementedException();
         }
 
         public Task<bool> UserExistsByIdAsync(int id)
