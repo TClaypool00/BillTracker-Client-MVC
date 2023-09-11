@@ -4,6 +4,17 @@ namespace BillTrackerClient.App.DataModels
 {
     public class UserRole
     {
+        public UserRole()
+        {
+
+        }
+
+        public UserRole(int userId)
+        {
+            UserId = userId;
+            RoleId = 1;
+        }
+
         [Key]
         public int UserRoleId { get; set; }
 
