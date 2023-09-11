@@ -1,10 +1,12 @@
 ﻿using BillTrackerClient.App.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
 namespace BillTrackerClient.App.Controllers
 {
+    [Authorize]
     public class HomeController : ControllerHelper
     {
         private readonly ILogger<HomeController> _logger;
