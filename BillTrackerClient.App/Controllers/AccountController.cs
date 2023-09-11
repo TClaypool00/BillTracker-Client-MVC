@@ -144,5 +144,13 @@ namespace BillTrackerClient.App.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> LogoutAsync()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Login");
+        }
     }
 }
