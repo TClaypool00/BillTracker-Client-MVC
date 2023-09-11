@@ -1,0 +1,28 @@
+﻿@model BillTrackerClient.App.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div class="form-group">
+                <input asp-for="Email" class="form-control" placeholder="@Html.DisplayNameFor(m => m.Email)" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="Password" class="form-control" placeholder="@Html.DisplayNameFor(m => m.Password)" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit" >@ViewData["Title"]</button>
+            </div>
+        </form>
+        <p>Don't have an account? Register <a class="link" asp-action="Register">here</a>!</p>
+    </div>
+</div>
