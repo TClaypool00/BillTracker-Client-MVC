@@ -54,5 +54,6 @@ namespace BillTrackerClient.App.DataModels
         public string PhoneNumber { get; set; }
 
         public List<UserRole> UserRoles { get; set; }
+        public List<Bill> Bills { get; set; }
     }
 }
