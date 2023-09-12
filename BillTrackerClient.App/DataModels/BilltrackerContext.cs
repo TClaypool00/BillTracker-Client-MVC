@@ -14,6 +14,8 @@ namespace BillTrackerClient.App.DataModels
         {
         }
 
+        public DbSet<Bill> Bills { get; set; }
+        public DbSet<PaymentHistory> PaymentHistories { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
@@ -28,7 +30,9 @@ namespace BillTrackerClient.App.DataModels
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.Entity<Bill>()
+                .Property(e => e.IsActive)
+                .HasDefaultValue(true);
         }
     }
 }

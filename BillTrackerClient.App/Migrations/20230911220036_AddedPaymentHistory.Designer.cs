@@ -3,6 +3,7 @@ using System;
 using BillTrackerClient.App.DataModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BillTrackerClient.App.Migrations
 {
     [DbContext(typeof(BillTrackerContext))]
-    partial class BillTrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20230911220036_AddedPaymentHistory")]
+    partial class AddedPaymentHistory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,24 +55,16 @@ namespace BillTrackerClient.App.Migrations
                 {
                     b.Property<int>("HistoryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
+                        .HasColumnType("int");
 
                     b.Property<int?>("BillId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DateDue")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnOrder(3);
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("DatePaid")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnOrder(4);
-
-                    b.Property<double>("Price")
-                        .HasColumnType("double")
-                        .HasColumnOrder(2);
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("HistoryId");
 
