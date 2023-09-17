@@ -1,8 +1,7 @@
 ﻿using BillTrackerClient.App.Models.PostModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
+using System;
 
 namespace BillTrackerClient.App.Controllers
 {
@@ -12,19 +11,21 @@ namespace BillTrackerClient.App.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            var model = new PostBillViewModel()
+            var model = new PostBillViewModel
             {
-                CompanyDropDown = new List<SelectListItem>()
-                {
-                    new SelectListItem("Add a company", "")
-                }
+                DateDue = DateTime.Now
             };
 
             return View(model);
         }
 
-        public ActionResult AddAsync(PostBillViewModel model)
+        public ActionResult Add(PostBillViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+                return NoContent();
+            }
+
             return View(model);
         }
     }
