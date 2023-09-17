@@ -32,6 +32,7 @@ namespace BillTrackerClient.App
             });
 
             //Services
+            services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IPasswordservice, PasswordService>();
             services.AddScoped<IUserRoleService, UserRoleService>();
             services.AddScoped<IUserService, UserService>();
