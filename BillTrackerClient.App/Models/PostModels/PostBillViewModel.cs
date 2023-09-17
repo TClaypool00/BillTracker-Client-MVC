@@ -1,7 +1,5 @@
 ﻿using BillTrackerClient.App.CustomAnnotations;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BillTrackerClient.App.Models.PostModels
@@ -21,11 +19,9 @@ namespace BillTrackerClient.App.Models.PostModels
         [Required(ErrorMessage = "Date due is required")]
         [DateMustPresent(ErrorMessage = "Date cannot be in the previous month")]
         [DataType(DataType.Date)]
-        public DateTime DateDue { get; set; } = DateTime.Now;
+        public DateTime DateDue { get; set; }
 
-        [Required(ErrorMessage = "Company selection is require")]
-        public int? CompanyId { get; set; }
-
-        public List<SelectListItem> CompanyDropDown { get; set; }
+        [Display(Name = "Enter a company text")]
+        public string CompanyText { get; set; }
     }
 }
