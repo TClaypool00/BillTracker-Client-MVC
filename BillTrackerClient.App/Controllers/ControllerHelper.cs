@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
+using System.Security.Claims;
 
 namespace BillTrackerClient.App.Controllers
 {
@@ -40,6 +42,16 @@ namespace BillTrackerClient.App.Controllers
         }
         #endregion
 
+        #endregion
+
+        #region User claims properties
+        protected int UserId
+        {
+            get
+            {
+                return int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            }
+        }
         #endregion
     }
 }
