@@ -1,0 +1,95 @@
+﻿<div class="form-group">
+    <div class="row">
+        <div class="col-md-6">
+            <input id="txtCompanySearch" class="form-control" placeholder="Enter a company text..." />
+            <div id="companyDropdownItems" class="dropdown-div"></div>
+        </div>
+        <div class="col-md-6">
+            <button id="btnAddCompany" class="btn btn-primary">Add a company</button>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/\jquery.min.js"></script>
+
+<script type="text/javascript">
+    const txtCompanySearch = document.getElementById('txtCompanySearch');
+    const errorMessage = document.getElementById('errorMessage');
+    const btnAddCompany = document.getElementById('btnAddCompany');
+    const companyDropdownItems = document.getElementById('companyDropdownItems');
+    const successMessage = document.getElementById('successMessage');
+
+    var index = null;
+
+    $(document).ready(function () {
+        btnAddCompany.disabled = true;
+    })
+
+    txtCompanySearch.addEventListener('keyup', function (e) {
+        e.preventDefault();
+
+        companyDropdownItems.innerHTML = '';
+
+        if (txtCompanySearch.value !== '') {
+            if ((e.key >= 'a' || e.key <= 'z') || e.key == 'Backspace') {
+                index = 0;
+
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetCompanyDropdown", "Companies")' + `?search=${txtCompanySearch.value}&index=${index}`,
+                    success: function (data) {
+                        companyDropdownItems.innerHTML = '';
+
+                        for (let i = 0; i < data.length; i++) {
+                            const element = data[i];
+                            const div = document.createElement('div');
+                            div.classList.add('dropdown-content-item', 'bg-secondary');
+                            div.innerHTML = element.companyName;
+
+                            div.addEventListener('click', function (e) {
+                                e.preventDefault();
+
+                                txtCompanySearch.value = element.companyName;
+
+                                companyDropdownItems.innerHTML = '';
+                            });
+
+                            companyDropdownItems.appendChild(div);
+                        }
+
+                        btnAddCompany.disabled = true;
+                    },
+                    error: function (error) {
+                        if (error.status != 404) {
+                            errorMessage.innerText = error.responseText;
+                        } else {
+                            btnAddCompany.disabled = false;
+                        }
+                    }
+                });
+            }
+        }
+    });
+
+    btnAddCompany.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        let formData = {
+            companyName: txtCompanySearch.value
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("AddCompany", "Companies")',
+            data: JSON.stringify(formData),
+            contentType: 'application/json',
+            dataType: "JSON",
+            success: function (resp) {
+                successMessage.innerHTML = resp.responseText;
+            },
+            error: function (err) {
+                errorMessage.innerHTML = err.responseText;
+            }
+        });
+    });
+</script>

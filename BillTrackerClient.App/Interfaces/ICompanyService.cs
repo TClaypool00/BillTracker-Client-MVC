@@ -1,5 +1,5 @@
 ﻿using BillTrackerClient.App.CoreModels;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using BillTrackerClient.App.CoreModels.PartialCoreModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,8 +7,24 @@ namespace BillTrackerClient.App.Interfaces
 {
     public interface ICompanyService
     {
-        public Task<List<SelectListItem>> GetCompanyDropDownAsync(int? index = null);
+        #region Public methods
+        public Task<List<PartialCoreCompany>> GetCompanyDropDownAsync(string search, int? index = null);
 
-        public Task<CoreCompany> AddCompanyAsync(CoreCompany company);
+        public Task AddCompanyAsync(CoreCompany company);
+
+        public Task<bool> CompanyNameExistsAsync(string name);
+
+        public int GetCompanyIdByNameAsync(string name);
+
+        #region Message functions
+        public string CompanyNameNotFoundMessage(string name);
+
+        public string CompanyNameExistsMessage(string name);
+        #endregion
+        #endregion
+
+        #region Public properties
+        public string CompanyAddedOKMessage { get; }
+        #endregion
     }
 }
