@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,5 +23,10 @@ namespace BillTrackerClient.App.DataModels
         [Required]
         public int UserId { get; set; }
         public User User { get; set; }
+
+        [NotMapped]
+        public PaymentHistory PaymentHistory { get; set; }
+
+        public List<PaymentHistory> PaymentHistories { get; set; }
     }
 }
