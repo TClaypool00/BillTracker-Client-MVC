@@ -21,7 +21,10 @@ namespace BillTrackerClient.App.Models.PostModels
         [DataType(DataType.Date)]
         public DateTime DateDue { get; set; }
 
+        public int CompanyId { get; set; }
+
         [Display(Name = "Enter a company text")]
+        [Required(ErrorMessage = "Company text is required")]
         public string CompanyText { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BillTrackerClient.App.DataModels;
+using BillTrackerClient.App.Models.PostModels;
 using System;
 
 namespace BillTrackerClient.App.CoreModels.AbstractModels
@@ -9,6 +10,15 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
         protected CoreExpense()
         {
 
+        }
+
+        public CoreExpense(PostBillViewModel postBillViewModel, int userId)
+        {
+            _postBillViewModel = postBillViewModel ?? throw new ArgumentNullException(nameof(postBillViewModel));
+            DateDue = _postBillViewModel.DateDue;
+            Price = (double)_postBillViewModel.Price;
+            CompanyId = _postBillViewModel.CompanyId;
+            _userId = userId;
         }
 
         protected CoreExpense(Bill bill)
@@ -27,14 +37,17 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
         private DateTime? _datePaid;
         private bool _isPaid;
         private bool _isLate;
+        private double _price;
+        private int _userId;
 
-        #region Data Models private fields
+        #region Models private fields
         private readonly Bill _bill;
+        private readonly PostBillViewModel _postBillViewModel;
         #endregion
         #endregion
 
         #region Public Properties
-        protected DateTime DateDue
+        public DateTime DateDue
         {
             get
             {
@@ -46,7 +59,7 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
             }
         }
 
-        protected DateTime? DatePaid
+        public DateTime? DatePaid
         {
             get
             {
@@ -58,7 +71,7 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
             }
         }
 
-        protected string DateDueString
+        public string DateDueString
         {
             get
             {
@@ -66,7 +79,7 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
             }
         }
 
-        protected string DatePaidString
+        public string DatePaidString
         {
             get
             {
@@ -81,7 +94,7 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
             }
         }
 
-        protected bool IsPaid
+        public bool IsPaid
         {
             get
             {
@@ -93,7 +106,7 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
             }
         }
 
-        protected bool IsLate
+        public bool IsLate
         {
             get
             {
@@ -111,6 +124,46 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
                 _isLate = value;
             }
         }
+
+        public double Price
+        {
+            get
+            {
+                return _price;
+            }
+            set
+            {
+                _price = value;
+            }
+        }
+
+        public string PriceString
+        {
+            get
+            {
+                return _price.ToString("C");
+            }
+        }
+
+        public int CompanyId { get; set; }
+
+        public DateTime DateCreated { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public int UserId
+        {
+            get
+            {
+                return _userId;
+            }
+            set
+            {
+                _userId = value;
+            }
+        }
+
+        public CoreUser User { get; set; }
     }
     #endregion
 }

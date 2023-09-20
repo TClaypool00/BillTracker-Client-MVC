@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BillTrackerClient.App.CoreModels;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,6 +7,33 @@ namespace BillTrackerClient.App.DataModels
 {
     public class PaymentHistory
     {
+        #region
+        public PaymentHistory()
+        {
+
+        }
+
+        public PaymentHistory(CoreBill coreBill)
+        {
+            _coreBill = coreBill ?? throw new ArgumentNullException(nameof(coreBill));
+
+
+            DateDue = _coreBill.DateDue;
+            Price = _coreBill.Price;
+            DateDue = _coreBill.DateDue;
+            DatePaid = _coreBill.DatePaid;
+            BillId = _coreBill.BillId;
+
+        }
+        #endregion
+
+        #region Private fields
+        #region Data Models private fields
+        private readonly CoreBill _coreBill;
+        #endregion
+        #endregion
+
+        #region Public properties
         [Key]
         [Column(Order = 0)]
         public int HistoryId { get; set; }
@@ -23,6 +51,7 @@ namespace BillTrackerClient.App.DataModels
         public DateTime DateDue { get; set; }
 
         [Column(Order = 4)]
-        public DateTime DatePaid { get; set; }
+        public DateTime? DatePaid { get; set; }
+        #endregion
     }
 }

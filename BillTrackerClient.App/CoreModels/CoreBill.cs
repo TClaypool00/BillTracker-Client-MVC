@@ -1,13 +1,18 @@
-﻿using BillTrackerClient.App.Models.PostModels;
+﻿using BillTrackerClient.App.CoreModels.AbstractModels;
+using BillTrackerClient.App.Models.PostModels;
 using System;
 
 namespace BillTrackerClient.App.CoreModels
 {
-    public class CoreBill
+    public class CoreBill : CoreExpense
     {
-        #region Private Fields
+        //TODO: Pie Chart for 
+        //TODO: Get back per month per year
+        //TODO: Promotion based on bills
+        //TODO: Chatbot helper maybe in Python?
+        //Search for news articles
+
         private readonly PostBillViewModel _postBillViewModel;
-        #endregion
 
         #region Constructors
         public CoreBill()
@@ -15,10 +20,11 @@ namespace BillTrackerClient.App.CoreModels
             
         }
 
-        public CoreBill(PostBillViewModel postBillViewModel)
+        public CoreBill(PostBillViewModel postBillViewModel, int userId) : base(postBillViewModel, userId)
         {
             _postBillViewModel = postBillViewModel ?? throw new ArgumentNullException(nameof(postBillViewModel));
 
+            BillName = _postBillViewModel.BillName;
         }
         #endregion
 
@@ -26,13 +32,6 @@ namespace BillTrackerClient.App.CoreModels
         public int BillId { get; set; }
 
         public string BillName { get; set; }
-
-        public DateTime DateCreated { get; set; }
-
-        public bool IsActive { get; set; }
-
-        public int UserId { get; set; }
-        public CoreUser User { get; set; }
         #endregion
     }
 }
