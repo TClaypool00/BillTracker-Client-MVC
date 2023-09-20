@@ -68,6 +68,7 @@
         <main role="main" class="pb-3">
             <p id="errorMessage" class="text-danger font-weight-bold">@ViewBag.error</p>
             <p id="successMessage" class="text-success font-weight-bold">@ViewBag.success</p>
+            <ul id="errorList" class="text-danger"></ul>
             @RenderBody()
         </main>
     </div>
@@ -80,6 +81,11 @@
     <script src="/lib/jquery/dist/jquery.js"></script>    
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage')
+        const errorList = document.getElementById('errorList')
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

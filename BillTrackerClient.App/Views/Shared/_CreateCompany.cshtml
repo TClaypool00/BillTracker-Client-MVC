@@ -1,4 +1,10 @@
-﻿<div class="form-group">
+﻿<!--
+
+The constant "successMessage" and "errorMessage" are declared in the _Layout view
+
+-->
+
+<div class="form-group">
     <div class="row">
         <div class="col-md-6">
             <input id="txtCompanySearch" class="form-control" placeholder="Enter a company text..." />
@@ -14,10 +20,8 @@
 
 <script type="text/javascript">
     const txtCompanySearch = document.getElementById('txtCompanySearch');
-    const errorMessage = document.getElementById('errorMessage');
     const btnAddCompany = document.getElementById('btnAddCompany');
     const companyDropdownItems = document.getElementById('companyDropdownItems');
-    const successMessage = document.getElementById('successMessage');
 
     var index = null;
 
