@@ -3,6 +3,7 @@ using System;
 using BillTrackerClient.App.DataModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BillTrackerClient.App.Migrations
 {
     [DbContext(typeof(BillTrackerContext))]
-    partial class BillTrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20230918011741_MadeDatePaidNullable")]
+    partial class MadeDatePaidNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
