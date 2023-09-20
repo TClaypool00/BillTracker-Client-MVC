@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
@@ -51,6 +52,28 @@ namespace BillTrackerClient.App.Controllers
             {
                 return int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             }
+        }
+        #endregion
+
+        #region AJAX methods
+        protected ActionResult InternalError(Exception exception)
+        {
+            return StatusCode(500, exception.Message);
+        }
+
+        protected List<string> DisplayErrorMessages()
+        {
+            var errors = new List<string>();
+
+            foreach (var item in ModelState.Values)
+            {
+                foreach (var error in item.Errors)
+                {
+                    errors.Add(error.ErrorMessage);
+                }
+            }
+
+            return errors;
         }
         #endregion
     }
