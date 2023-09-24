@@ -19,6 +19,16 @@ namespace BillTrackerClient.App.Services
 
         public string BillUPdatedMessage => "Bill has been updated!";
 
+        public async Task ActiveBillAsync(int id, bool isActive)
+        {
+            var bill = await FindBillAsync(id);
+            bill.IsActive = isActive;
+
+            _context.Bills.Update(bill);
+
+            await SaveAsync();
+        }
+
         public Task<bool> BillNameExistsAsync(string name, int userId, int? id = null)
         {
             if (id is null)
@@ -132,7 +142,7 @@ namespace BillTrackerClient.App.Services
         {
             try
             {
-                var oldBill = await _context.Bills.FirstOrDefaultAsync(b => b.BillId == coreBill.BillId);
+                var oldBill = await FindBillAsync(coreBill.BillId);
                 oldBill.IsActive = coreBill.IsActive;
                 oldBill.BillName = coreBill.BillName;
                 oldBill.CompanyId = coreBill.CompanyId;
@@ -154,6 +164,11 @@ namespace BillTrackerClient.App.Services
             {
                 throw;
             }
+        }
+
+        private Task<Bill> FindBillAsync(int id)
+        {
+            return _context.Bills.FirstOrDefaultAsync(b => b.BillId == id);
         }
     }
 }

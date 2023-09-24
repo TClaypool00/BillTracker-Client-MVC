@@ -13,6 +13,8 @@ namespace BillTrackerClient.App.Interfaces
 
         public Task UpdateBillAsync(CoreBill coreBill);
 
+        public Task ActiveBillAsync(int id, bool isActive);
+
         public Task<List<CoreBill>> GetAllBillsAsync(int userId, int? index = null, string search = null);
         #endregion
 

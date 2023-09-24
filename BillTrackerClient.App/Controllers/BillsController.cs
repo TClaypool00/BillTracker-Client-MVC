@@ -17,11 +17,13 @@ namespace BillTrackerClient.App.Controllers
     {
         private readonly IBillService _billService;
         private readonly ICompanyService _companyService;
+        private readonly IMessageService _messageService;
 
-        public BillsController(IBillService billService, ICompanyService companyService)
+        public BillsController(IBillService billService, ICompanyService companyService, IMessageService messageService)
         {
             _billService = billService;
             _companyService = companyService;
+            _messageService = messageService;
         }
 
         [HttpGet]
@@ -106,6 +108,27 @@ namespace BillTrackerClient.App.Controllers
 
                 Response.StatusCode = (int)HttpStatusCode.OK;
                 return Json(_billService.BillUPdatedMessage);
+            }
+            catch (Exception e)
+            {
+                return InternalError(e);
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ActiveBill([FromBody] PostActiveViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(DisplayErrorMessages());
+                }
+
+                await _billService.ActiveBillAsync(model.Id, model.IsActive);
+
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                return Json(_messageService.IsActiveMessage("bill", model.IsActive));
             }
             catch (Exception e)
             {

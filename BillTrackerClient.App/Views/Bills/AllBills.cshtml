@@ -127,11 +127,46 @@
 
                 if (checkbox.type.toLowerCase() == 'checkbox') {
                     checkbox.addEventListener('change', function (e) {
-                        this.disabled = true;
+                        let message = 'Are you sure you wish to make this bill ';
 
-                        console.log('Has been clicked');
+                        if (this.checked) {
+                            message += 'active';
+                        } else {
+                            message += 'inactive';
+                        }
 
-                        this.disabled = false;
+                        message += '?';
+
+                         if (confirm(message)) {
+                            this.disabled = true;
+
+                            let tr = this.parentElement.parentElement;
+
+                            let id = Number(tr.getElementsByTagName('td')[0].innerHTML);
+
+                            let model = {
+                                id: id,
+                                isActive: this.checked
+                            };
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("ActiveBill")',
+                                data: JSON.stringify(model),
+                                contentType: "application/json",
+                                dataType: "JSON",
+                                success: function (resp) {
+                                    successMessage.innerHTML = resp;
+                                },
+                                error: function (err) {
+                                    console.log(err);
+                                }
+                            });
+
+                            this.disabled = false;
+                         } else {
+                             this.checked = !this.checked;
+                         }
                     })
                 }
             }
