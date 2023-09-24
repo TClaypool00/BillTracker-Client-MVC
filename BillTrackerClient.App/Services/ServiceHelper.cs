@@ -1,4 +1,5 @@
 ﻿using BillTrackerClient.App.DataModels;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace BillTrackerClient.App.Services
@@ -28,6 +29,14 @@ namespace BillTrackerClient.App.Services
             else
             {
                 _index = index.Value * 10;
+            }
+        }
+
+        protected void Detach(object model)
+        {
+            if (model is not null)
+            {
+                _context.Entry(model).State = EntityState.Detached;
             }
         }
     }
