@@ -27,7 +27,26 @@ namespace BillTrackerClient.App.CoreModels
                 _userId = userId;
             }
 
-            CompanyName = _commentViewModel.CompanyName;
+            _commentViewModel.CompanyName = _commentViewModel.CompanyName.Trim();
+
+            if (_commentViewModel.CompanyName.Contains(' '))
+            {
+                var words = _commentViewModel.CompanyName.Split(' ');
+                string word;
+
+                for (int i = 0; i < words.Length; i++)
+                {
+                    word = words[i];
+                    word = UpperCaseFirstWord(word);
+                    CompanyName += $"{word} ";
+                }
+
+                CompanyName = CompanyName.Trim();
+            }
+            else
+            {
+                CompanyName = UpperCaseFirstWord(_commentViewModel.CompanyName);
+            }
         }
 
         public int UserId
@@ -42,5 +61,12 @@ namespace BillTrackerClient.App.CoreModels
             }
         }
         public CoreUser User { get; set; }
+
+        #region private methods
+        private static string UpperCaseFirstWord(string word)
+        {
+            return $"{word[0].ToString().ToUpper()}{word[1..].ToLower()}";
+        }
+        #endregion
     }
 }
