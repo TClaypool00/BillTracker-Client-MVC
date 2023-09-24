@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 
 namespace BillTrackerClient.App.Controllers
@@ -74,6 +75,12 @@ namespace BillTrackerClient.App.Controllers
             }
 
             return errors;
+        }
+
+        protected ActionResult OKMessage(object message)
+        {
+            Response.StatusCode = (int)HttpStatusCode.OK;
+            return Json(message);
         }
         #endregion
     }

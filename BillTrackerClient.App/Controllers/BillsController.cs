@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace BillTrackerClient.App.Controllers
@@ -60,8 +59,7 @@ namespace BillTrackerClient.App.Controllers
                 await _billService.CreateBillAsync(coreBill);
 
 
-                Response.StatusCode = (int)HttpStatusCode.OK;
-                return Json(_billService.BillCreatedMessage);
+                return OKMessage(_billService.BillCreatedMessage);
             }
             catch (Exception e)
             {
@@ -106,8 +104,7 @@ namespace BillTrackerClient.App.Controllers
 
                 await _billService.UpdateBillAsync(coreBill);
 
-                Response.StatusCode = (int)HttpStatusCode.OK;
-                return Json(_billService.BillUPdatedMessage);
+                return OKMessage(_billService.BillUPdatedMessage);
             }
             catch (Exception e)
             {
@@ -127,8 +124,7 @@ namespace BillTrackerClient.App.Controllers
 
                 await _billService.ActiveBillAsync(model.Id, model.IsActive);
 
-                Response.StatusCode = (int)HttpStatusCode.OK;
-                return Json(_messageService.IsActiveMessage("bill", model.IsActive));
+                return OKMessage(_messageService.IsActiveMessage("bill", model.IsActive));
             }
             catch (Exception e)
             {

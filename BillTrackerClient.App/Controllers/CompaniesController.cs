@@ -48,8 +48,7 @@ namespace BillTrackerClient.App.Controllers
 
                 await _companyService.AddCompanyAsync(coreComment);
 
-                Response.StatusCode = (int)HttpStatusCode.OK;
-                return Json(_companyService.CompanyAddedOKMessage);
+                return OKMessage(_companyService.CompanyAddedOKMessage);
             }
             catch (Exception e)
             {
