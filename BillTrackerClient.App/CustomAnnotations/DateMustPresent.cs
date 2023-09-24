@@ -9,7 +9,7 @@ namespace BillTrackerClient.App.CustomAnnotations
         {
             if (value is DateTime date)
             {
-                if (date > DateTime.Today.AddMonths(-1) && date < DateTime.Today)
+                if (date < DateTime.Today.AddDays(- date.Day))
                 {
                     return false;
                 }
