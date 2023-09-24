@@ -32,10 +32,10 @@ The constant "successMessage" and "errorMessage" are declared in the _Layout vie
     txtCompanySearch.addEventListener('keyup', function (e) {
         e.preventDefault();
 
-        companyDropdownItems.innerHTML = '';
-
         if (txtCompanySearch.value !== '') {
-            if ((e.key >= 'a' || e.key <= 'z') || e.key == 'Backspace') {
+            if ((e.key >= 'a' && e.key <= 'z') || e.key == 'Backspace') {
+                companyDropdownItems.innerHTML = '';
+
                 index = 0;
 
                 $.ajax({
