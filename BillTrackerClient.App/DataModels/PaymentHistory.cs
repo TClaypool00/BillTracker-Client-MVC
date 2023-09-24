@@ -42,6 +42,9 @@ namespace BillTrackerClient.App.DataModels
         public int? BillId { get; set; }
         public virtual Bill Bill { get; set; }
 
+        public int? SubscriptionId { get; set; }
+        public virtual Subscription Subscription { get; set; }
+
         [Required]
         [Range(0.1, double.MaxValue)]
         [Column(Order = 2)]

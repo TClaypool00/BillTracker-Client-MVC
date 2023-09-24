@@ -17,8 +17,9 @@ namespace BillTrackerClient.App.DataModels
         public DbSet<Bill> Bills { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<PaymentHistory> PaymentHistories { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
