@@ -4,6 +4,7 @@ using BillTrackerClient.App.Models.PostModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace BillTrackerClient.App.Controllers
@@ -47,7 +48,8 @@ namespace BillTrackerClient.App.Controllers
 
                 await _companyService.AddCompanyAsync(coreComment);
 
-                return Ok(_companyService.CompanyAddedOKMessage);
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                return Json(_companyService.CompanyAddedOKMessage);
             }
             catch (Exception e)
             {
