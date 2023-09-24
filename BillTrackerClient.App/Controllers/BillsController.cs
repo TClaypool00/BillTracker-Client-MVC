@@ -57,6 +57,24 @@ namespace BillTrackerClient.App.Controllers
 
                 Response.StatusCode = (int)HttpStatusCode.OK;
                 return Json("Bill has been created");
+        [HttpGet]
+        public async Task<ActionResult> AllBills(int? index = null, string search = null)
+        {
+
+            var coreBills = await _billService.GetAllBillsAsync(UserId, index, search);
+            var billModels = new List<BillViewModel>();
+
+            if (coreBills.Count > 0)
+            {
+                for (int i = 0; i < coreBills.Count; i++)
+                {
+                    billModels.Add(new BillViewModel(coreBills[i]));
+                }
+            }
+
+            return View(billModels);
+        }
+
             }
             catch (Exception e)
             {

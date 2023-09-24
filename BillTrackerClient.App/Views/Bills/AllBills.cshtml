@@ -1,0 +1,184 @@
+﻿@model IEnumerable<BillTrackerClient.App.Models.BillViewModel>
+@{
+    ViewData["Title"] = "My Billls";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int index = 1;
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update bill</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formUpdateBill">
+                    <div class="form-group">
+                        <input type="number" hidden="hidden" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="number" hidden="hidden" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Enter bill name..." />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Enter price..." />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="date" class="form-control" />
+                    </div>
+
+                    <partial name="~/Views/Shared/_CreateCompany.cshtml" />
+
+                    <div class="form-group">
+                        <label>Active?</label>
+                        <input id="chckIsActive" type="checkbox" class="form-check-input" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="btnUpdateBill" type="button" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">@Html.DisplayNameFor(m => m.BillName)</th>
+            <th scope="col">@Html.DisplayNameFor(m => m.PriceString)</th>
+            <th scope="col">@Html.DisplayNameFor(m => m.IsActive)</th>
+            <th scope="col">@Html.DisplayNameFor(m => m.DateDueString)</th>
+            <th scope="col">@Html.DisplayNameFor(m => m.Company)</th>
+            <th scope="col">Edit</th>
+        </tr>
+    </thead>
+    <tbody id="billTableBody">
+        @if (Model.Count() > 0)
+        {
+            foreach (var item in Model)
+            {
+                <tr id="row-@index">
+                    <td>@item.BillId</td>
+                    <td>@item.BillName</td>
+                    <td>@item.PriceString</td>
+                    <td><input asp-for="ElementAt(index - 1).IsActive" /></td>
+                    <td>@item.DateDueString</td>
+                    <td>@item.Company</td>
+                    <td><button id="btnEdit-@index" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Edit</button></td>
+                </tr>
+
+                index += 1;
+            }
+        }
+        else
+        {
+            <tr>
+                <th colspan="5">No bills</th>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script type="text/javascript">
+        const tableBody = document.getElementById('billTableBody');
+        const buttons = tableBody.getElementsByTagName('button');
+        const formUpdateBill = document.getElementById('formUpdateBill');
+        const btnUpdateBill = document.getElementById('btnUpdateBill');
+        const checkBoxes = tableBody.getElementsByTagName('input');
+        const inputs = formUpdateBill.getElementsByTagName('input');
+
+        $(document).ready(function() {
+            for(let i = 0; i < buttons.length; i++) {
+                const button = buttons[i];
+
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    const tr = tableBody.getElementsByTagName('tr')[i];
+                    const tds = tr.getElementsByTagName('td');
+                    const rowIsActive = tr.getElementsByTagName('input')[0];
+
+                    inputs[0].value = i;
+                    inputs[1].value = tds[0].innerHTML;
+                    inputs[2].value = tds[1].innerHTML;
+                    inputs[3].value = tds[2].innerHTML.substring(1);
+                    inputs[4].value = tds[4].innerHTML;
+                    inputs[5].value = tds[5].innerHTML;
+                    inputs[6].checked = rowIsActive.checked;
+                });
+            }
+
+            for (let a = 0; a < checkBoxes.length; a++) {
+                const checkbox = checkBoxes[a];
+
+                if (checkbox.type.toLowerCase() == 'checkbox') {
+                    checkbox.addEventListener('change', function (e) {
+                        this.disabled = true;
+
+                        console.log('Has been clicked');
+
+                        this.disabled = false;
+                    })
+                }
+            }
+        });
+
+        btnUpdateBill.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            errorList.innerHTML = '';
+            successMessage.innerHTML = '';
+            errorMessage.innerHTML = '';
+
+            const updateBillModel = {
+                billId :  inputs[1].value,
+                billName : inputs[2].value,
+                price : inputs[3].value,
+                dateDue : inputs[4].value,
+                companyText: inputs[5].value,
+                isActive: inputs[6].checked
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateBill")',
+                data: JSON.stringify(updateBillModel),
+                contentType: "application/json",
+                dataType: "JSON",
+                success: function(data) {
+                    $('#exampleModal').modal('hide');
+
+                    const index = Number(inputs[0].value);
+                    const tableRow = formUpdateBill.getElementsByTagName('tr')[index];
+                    const tds = tableRow.getElementsByTagName('td');
+
+                    tds[1].innerHTML = inputs[2].value;
+                    tds[2].innerHTML = `$${inputs[3].value}`;
+
+                    inputs[1].value = tds[1].innerHTML;
+                    inputs[2].value = tds[2].innerHTML.substring(1);
+                    inputs[3].checked = rowIsActive.checked;
+
+                    successMessage.innerHTML = data;
+                },
+                error : function(err) {
+                    console.log(err);
+                }
+            });
+        })
+    </script>
+}
