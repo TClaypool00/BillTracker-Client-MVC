@@ -1,5 +1,6 @@
 ﻿using BillTrackerClient.App.DataModels;
 using BillTrackerClient.App.Models.PostModels;
+using BillTrackerClient.App.Models.PostModels.UpdateModels;
 using System;
 
 namespace BillTrackerClient.App.CoreModels.AbstractModels
@@ -12,13 +13,24 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
 
         }
 
+        public CoreExpense(UpdateBillViewModel updateBillViewModel, int userId)
+        {
+            _updateBillViewModel = updateBillViewModel ?? throw new ArgumentNullException(nameof(updateBillViewModel));
+
+            DateDue = _updateBillViewModel.DateDue;
+            Price = (double)_updateBillViewModel.Price;
+            _userId = userId;
+            IsActive = _updateBillViewModel.IsActive;
+            CompanyId = _updateBillViewModel.CompanyId;
+        }
+
         public CoreExpense(PostBillViewModel postBillViewModel, int userId)
         {
             _postBillViewModel = postBillViewModel ?? throw new ArgumentNullException(nameof(postBillViewModel));
             DateDue = _postBillViewModel.DateDue;
             Price = (double)_postBillViewModel.Price;
-            CompanyId = _postBillViewModel.CompanyId;
             _userId = userId;
+            CompanyId = _postBillViewModel.CompanyId;
         }
 
         protected CoreExpense(Bill bill)
@@ -43,6 +55,7 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
         #region Models private fields
         private readonly Bill _bill;
         private readonly PostBillViewModel _postBillViewModel;
+        private readonly UpdateBillViewModel _updateBillViewModel;
         #endregion
         #endregion
 

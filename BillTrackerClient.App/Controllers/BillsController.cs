@@ -75,6 +75,27 @@ namespace BillTrackerClient.App.Controllers
             return View(billModels);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> UpdateBill([FromBody] UpdateBillViewModel updateBillViewModel)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(DisplayErrorMessages());
+                }
+
+                //TODO: Add a validation to check if bill belongs to user
+
+                var coreBill = new CoreBill(updateBillViewModel, UserId)
+                {
+                    CompanyId = _companyService.GetCompanyIdByNameAsync(updateBillViewModel.CompanyText)
+                };
+
+                await _billService.UpdateBillAsync(coreBill);
+
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                return Json(_billService.BillUPdatedMessage);
             }
             catch (Exception e)
             {

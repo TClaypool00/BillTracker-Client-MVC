@@ -1,5 +1,7 @@
 ﻿using BillTrackerClient.App.CoreModels.AbstractModels;
+using BillTrackerClient.App.DataModels;
 using BillTrackerClient.App.Models.PostModels;
+using BillTrackerClient.App.Models.PostModels.UpdateModels;
 using System;
 
 namespace BillTrackerClient.App.CoreModels
@@ -12,7 +14,14 @@ namespace BillTrackerClient.App.CoreModels
         //TODO: Chatbot helper maybe in Python?
         //Search for news articles
 
+        #region Private fields
+
+        #region Private model fields
         private readonly PostBillViewModel _postBillViewModel;
+        private readonly Bill _bill;
+        private readonly UpdateBillViewModel _updateBillViewModel;
+        #endregion
+        #endregion
 
         #region Constructors
         public CoreBill()
@@ -26,6 +35,15 @@ namespace BillTrackerClient.App.CoreModels
 
             BillName = _postBillViewModel.BillName;
         }
+
+        public CoreBill(UpdateBillViewModel updateBillViewModel, int userId) : base(updateBillViewModel, userId)
+        {
+            _updateBillViewModel = updateBillViewModel ?? throw new ArgumentNullException(nameof(updateBillViewModel));
+
+            BillId = _updateBillViewModel.BillId;
+            BillName = _updateBillViewModel.BillName;
+        }
+
         public CoreBill(Bill bill)
         {
             _bill = bill ?? throw new ArgumentNullException(nameof(bill));
