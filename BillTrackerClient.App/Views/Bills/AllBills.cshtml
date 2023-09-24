@@ -159,7 +159,7 @@
                                     successMessage.innerHTML = resp;
                                 },
                                 error: function (err) {
-                                    console.log(err);
+                                    displayErrorMessage(err);
                                 }
                             });
 
@@ -211,7 +211,7 @@
                     successMessage.innerHTML = data;
                 },
                 error : function(err) {
-                    console.log(err);
+                    displayErrorMessage(err);
                 }
             });
         })
