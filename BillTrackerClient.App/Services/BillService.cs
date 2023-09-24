@@ -3,6 +3,8 @@ using BillTrackerClient.App.DataModels;
 using BillTrackerClient.App.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BillTrackerClient.App.Services
@@ -12,6 +14,8 @@ namespace BillTrackerClient.App.Services
         public BillService(BillTrackerContext context) : base(context)
         {
         }
+
+        public string BillCreatedMessage => "Bill has been created!";
 
         public string BillUPdatedMessage => "Bill has been updated!";
 

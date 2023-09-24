@@ -16,6 +16,9 @@ namespace BillTrackerClient.App.Interfaces
         public Task<List<CoreBill>> GetAllBillsAsync(int userId, int? index = null, string search = null);
         #endregion
 
+        #region Public messages
+        public string BillCreatedMessage { get; }
+
         public string BillUPdatedMessage { get; }
         #endregion
     }

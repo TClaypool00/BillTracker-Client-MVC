@@ -1,9 +1,12 @@
 ﻿using BillTrackerClient.App.CoreModels;
 using BillTrackerClient.App.Interfaces;
+using BillTrackerClient.App.Models;
 using BillTrackerClient.App.Models.PostModels;
+using BillTrackerClient.App.Models.PostModels.UpdateModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -56,7 +59,14 @@ namespace BillTrackerClient.App.Controllers
 
 
                 Response.StatusCode = (int)HttpStatusCode.OK;
-                return Json("Bill has been created");
+                return Json(_billService.BillCreatedMessage);
+            }
+            catch (Exception e)
+            {
+                return InternalError(e);
+            }
+        }
+
         [HttpGet]
         public async Task<ActionResult> AllBills(int? index = null, string search = null)
         {
