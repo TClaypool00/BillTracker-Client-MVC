@@ -90,6 +90,7 @@ The constant "successMessage" and "errorMessage" are declared in the _Layout vie
             dataType: "JSON",
             success: function (resp) {
                 successMessage.innerHTML = resp;
+                btnAddCompany.disabled = true;
             },
             error: function (err) {
                 errorMessage.innerHTML = err.responseText;
