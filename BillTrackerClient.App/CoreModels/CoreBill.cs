@@ -26,6 +26,30 @@ namespace BillTrackerClient.App.CoreModels
 
             BillName = _postBillViewModel.BillName;
         }
+        public CoreBill(Bill bill)
+        {
+            _bill = bill ?? throw new ArgumentNullException(nameof(bill));
+
+            BillId = _bill.BillId;
+            BillName = _bill.BillName;
+            DateCreated = _bill.DateCreated;
+            IsActive = _bill.IsActive;
+
+            if (_bill.PaymentHistory is not null)
+            {
+                Price = _bill.PaymentHistory.Price;
+                DateDue = _bill.PaymentHistory.DateDue;
+                DatePaid = _bill.PaymentHistory.DatePaid;
+            }
+
+            if (_bill.Company is not null)
+            {
+                Company = new CoreCompany
+                {
+                    CompanyName = _bill.Company.CompanyName
+                };
+            }
+        }
         #endregion
 
         #region Public properties

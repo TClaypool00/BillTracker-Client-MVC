@@ -60,5 +60,67 @@ namespace BillTrackerClient.App.Services
                 throw;
             }
         }
+
+        public async Task<List<CoreBill>> GetAllBillsAsync(int userId, int? index = null, string search = null)
+        {
+            List<Bill> bills;
+            var coreBills = new List<CoreBill>();
+
+            ConfigureIndex(index);
+
+            if (search is null)
+            {
+                bills = await _context.Bills
+                    .Where(u => u.UserId == userId)
+                    .Take(10)
+                    .Skip(_index)
+                    .OrderBy(u => u.BillId)
+                    .Select(b => new Bill
+                    {
+                        BillId = b.BillId,
+                        BillName = b.BillName,
+                        DateCreated = b.DateCreated,
+                        IsActive = b.IsActive,
+                        Company = new Company
+                        {
+                            CompanyName = b.Company.CompanyName
+                        },
+                        PaymentHistory = b.PaymentHistories.FirstOrDefault(d => d.DateDue.Month == DateTime.Now.Month && d.DateDue.Year == DateTime.Now.Year)
+                    })
+                    .ToListAsync();
+            }
+            else
+            {
+                bills = await _context.Bills
+                    .Where(u => u.UserId == userId && u.BillName.Contains(search))
+                    .Take(10)
+                    .Skip(_index)
+                    .OrderBy(u => u.BillId)
+                    .Select(b => new Bill
+                    {
+                        BillId = b.BillId,
+                        BillName = b.BillName,
+                        DateCreated = b.DateCreated,
+                        IsActive = b.IsActive,
+                        Company = new Company
+                        {
+                            CompanyName = b.Company.CompanyName
+                        },
+                        PaymentHistory = b.PaymentHistories.FirstOrDefault(d => d.DateDue.Month == DateTime.Now.Month && d.DateDue.Year == DateTime.Now.Year)
+                    })
+                    .ToListAsync();
+            }
+
+            if (bills.Count > 0)
+            {
+                for (int i = 0; i < bills.Count; i++)
+                {
+                    coreBills.Add(new CoreBill(bills[i]));
+                }
+            }
+
+            return coreBills;
+        }
+
     }
 }

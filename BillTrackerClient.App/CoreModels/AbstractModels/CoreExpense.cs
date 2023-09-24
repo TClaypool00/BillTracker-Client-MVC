@@ -75,7 +75,7 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
         {
             get
             {
-                return _dateDue.ToString("F");
+                return $"{_dateDue:yyyy}-{_dateDue:MM}-{_dateDue:dd}";
             }
         }
 
@@ -85,11 +85,11 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
             {
                 if (_datePaid.HasValue)
                 {
-                    return _datePaid.Value.ToString("F");
+                    return _datePaid.Value.ToString("D");
                 }
                 else
                 {
-                    return "";
+                    return "Not paid";
                 }
             }
         }
@@ -145,9 +145,15 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
             }
         }
 
-        public int CompanyId { get; set; }
-
         public DateTime DateCreated { get; set; }
+
+        public string DateCreatedString
+        {
+            get
+            {
+                return DateCreated.ToString("D");
+            }
+        }
 
         public bool IsActive { get; set; }
 
