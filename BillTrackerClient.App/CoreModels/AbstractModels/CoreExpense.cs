@@ -164,6 +164,10 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
         }
 
         public CoreUser User { get; set; }
+
+        public CoreCompany Company { get; set; }
+
+        public int CompanyId { get; set; }
     }
     #endregion
 }

@@ -25,6 +25,7 @@ namespace BillTrackerClient.App.DataModels
 
             BillName = _coreBill.BillName;
             UserId = _coreBill.UserId;
+            CompanyId = _coreBill.CompanyId;
         }
         #endregion
 
@@ -51,6 +52,10 @@ namespace BillTrackerClient.App.DataModels
         [Required]
         public int UserId { get; set; }
         public User User { get; set; }
+
+        [Required]
+        public int CompanyId { get; set; }
+        public Company Company { get; set; }
 
         [NotMapped]
         public PaymentHistory PaymentHistory { get; set; }

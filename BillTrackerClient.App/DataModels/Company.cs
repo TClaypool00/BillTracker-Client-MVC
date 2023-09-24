@@ -1,5 +1,6 @@
 ﻿using BillTrackerClient.App.CoreModels;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BillTrackerClient.App.DataModels
@@ -36,5 +37,7 @@ namespace BillTrackerClient.App.DataModels
         [Required]
         public int UserId { get; set; }
         public User User { get; set; }
+
+        public List<Bill> Bills { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using BillTrackerClient.App.DataModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BillTrackerClient.App.Migrations
 {
     [DbContext(typeof(BillTrackerContext))]
-    partial class BillTrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20230923050217_AddedCompanyIdToBills")]
+    partial class AddedCompanyIdToBills
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +33,9 @@ namespace BillTrackerClient.App.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("CompanyId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
