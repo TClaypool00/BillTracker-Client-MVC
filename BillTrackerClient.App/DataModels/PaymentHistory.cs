@@ -25,11 +25,22 @@ namespace BillTrackerClient.App.DataModels
             BillId = _coreBill.BillId;
 
         }
+
+        public PaymentHistory(CoreSubscription coreSubscription)
+        {
+            _coreSubscription = coreSubscription ?? throw new ArgumentNullException(nameof(coreSubscription));
+
+            DateDue = _coreSubscription.DateDue;
+            Price = _coreSubscription.Price;
+            DatePaid = _coreSubscription.DatePaid;
+            SubscriptionId = _coreSubscription.SubscriptionId;
+        }
         #endregion
 
         #region Private fields
         #region Data Models private fields
         private readonly CoreBill _coreBill;
+        private readonly CoreSubscription _coreSubscription;
         #endregion
         #endregion
 

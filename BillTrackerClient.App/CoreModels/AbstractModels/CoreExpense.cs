@@ -13,6 +13,7 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
 
         }
 
+        #region Bills
         public CoreExpense(UpdateBillViewModel updateBillViewModel, int userId)
         {
             _updateBillViewModel = updateBillViewModel ?? throw new ArgumentNullException(nameof(updateBillViewModel));
@@ -42,6 +43,17 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
 
             }
         }
+        #endregion Subscriptions
+
+        protected CoreExpense(PostSubscriptionViewModel postSubscriptionViewModel, int userId)
+        {
+            _postSubscriptionViewModel = postSubscriptionViewModel;
+
+            DateDue = _postSubscriptionViewModel.DateDue;
+            Price = (double)_postSubscriptionViewModel.Price;
+            _userId = userId;
+            CompanyId = _postSubscriptionViewModel.CompanyId;
+        }
         #endregion
 
         #region Private Fields
@@ -56,6 +68,7 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
         private readonly Bill _bill;
         private readonly PostBillViewModel _postBillViewModel;
         private readonly UpdateBillViewModel _updateBillViewModel;
+        private readonly PostSubscriptionViewModel _postSubscriptionViewModel;
         #endregion
         #endregion
 
