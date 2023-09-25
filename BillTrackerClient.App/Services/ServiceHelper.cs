@@ -7,12 +7,19 @@ namespace BillTrackerClient.App.Services
     public class ServiceHelper
     {
         protected readonly BillTrackerContext _context;
+        protected readonly string _modelString;
 
         protected int _index;
 
         public ServiceHelper(BillTrackerContext context)
         {
             _context = context;
+        }
+
+        public ServiceHelper(BillTrackerContext context, string modelName)
+        {
+            _context = context;
+            _modelString = modelName;
         }
 
         protected async Task SaveAsync()
@@ -38,6 +45,16 @@ namespace BillTrackerClient.App.Services
             {
                 _context.Entry(model).State = EntityState.Detached;
             }
+        }
+
+        protected string CouldNotAddMessage(string model)
+        {
+            return $"{model} could not be added";
+        }
+
+        public string ModelAlreadyExistsMessage(string model, string name)
+        {
+            return $"A {model} with the name {name} aready exists.";
         }
     }
 }
