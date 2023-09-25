@@ -15,3 +15,19 @@
         errorMessage.innerHTML = err.responseText;
     }
 }
+
+function clearMessages() {
+    errorList.innerHTML = '';
+    successMessage.innerHTML = '';
+    errorMessage.innerHTML = '';
+}
+
+function clearFormValues(formId) {
+    const form = document.getElementById(formId);
+    const inputElements = form.getElementsByTagName('input');
+
+    for (let i = 0; i < inputElements.length; i++) {
+        let item = inputElements[i];
+        item.value = '';
+    }
+}

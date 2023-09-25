@@ -34,16 +34,16 @@
 
 @section Scripts {
     <script type="text/javascript">
+        const formId = 'formAddBill';
+
         const btnAddBill = document.getElementById('btnAddBill');
-        const formAddBill = document.getElementById('formAddBill');
+        const formAddBill = document.getElementById(formId);
         const inputElements = formAddBill.getElementsByTagName('input');
 
         btnAddBill.addEventListener('click', function(e) {
             e.preventDefault();
 
-            errorList.innerHTML = '';
-            successMessage.innerHTML = '';
-            errorMessage.innerHTML = '';
+            clearMessages();
 
             let billModel = {
                 billName : inputElements[0].value,
@@ -60,10 +60,7 @@
                 dataType: "JSON",
                 success: function (resp) {
                     if (confirm("Do you wish to add another bill?")) {
-                        for (let i = 0; i < inputElements.length; i++) {
-                            let item = inputElements[i];
-                            item.value = '';
-                        }
+                        clearFormValues(formId)
 
                         successMessage.innerHTML = resp;
                         inputElements[0].focus();
