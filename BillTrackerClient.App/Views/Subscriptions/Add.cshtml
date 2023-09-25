@@ -1,0 +1,80 @@
+﻿@model BillTrackerClient.App.Models.PostModels.PostSubscriptionViewModel
+@{
+    ViewData["Title"] = "Add a subscription";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" id="formAddSubscription">
+            <div class="form-group">
+                <input asp-for="SubscriptionName" class="form-control" placeholder="@Html.DisplayNameFor(m => m.SubscriptionName)" />
+                <span asp-validation-for="SubscriptionName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="Price" class="form-control" placeholder="@Html.DisplayNameFor(m => m.Price)" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="DateDue" class="form-control" />
+                <span asp-validation-for="DateDue" class="text-danger"></span>
+            </div>
+
+            <partial name="~/Views/Shared/_CreateCompany.cshtml" />
+
+            <div class="form-group">
+                <button id="btnAddSubscription" class="btn btn-primary" type="button">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        const formId = 'formAddSubscription';
+
+        const form = document.getElementById(formId);
+        const btnAddSubscription = document.getElementById('btnAddSubscription');
+        const inputs = form.getElementsByTagName('input');
+
+        btnAddSubscription.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.disabled = true;
+
+            clearMessages();
+
+            const subscriptionModel = {
+                subscriptionName : inputs[0].value,
+                price: inputs[1].value,
+                dateDue: inputs[2].value,
+                companyText: inputs[3].value
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Add")',
+                data: JSON.stringify(subscriptionModel),
+                contentType: "application/json",
+                dataType: "JSON",
+                success: function(resp) {
+                    if (confirm('Do you wish to add another subscription?')) {
+                        clearFormValues(formId);
+
+                        successMessage.innerHTML = resp;
+                        inputs[0].focus();
+                    } else {
+                        window.location = '@Url.Action("Index", "Home")';
+                    }
+                }
+            });
+
+
+            this.disabled = false;
+        });
+
+    </script>
+}
