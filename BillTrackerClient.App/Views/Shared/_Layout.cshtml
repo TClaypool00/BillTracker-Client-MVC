@@ -27,10 +27,10 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#billDropdown" aria-controls="billDropdown" aria-expanded="false" aria-label="Toggle navigation">
                                     <span class="navbar-toggler-icon"></span>
                                 </button>
-                                <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                                <div class="collapse navbar-collapse" id="billDropdown">
                                     <ul class="navbar-nav">
                                         <li class="nav-item dropdown">
                                             <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -43,6 +43,27 @@
 
                                                 <li class="nav-item">
                                                     <a class="nav-link text-dark" asp-controller="Bills" asp-action="AllBills">My bills</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#subscriptionDropdown" aria-controls="subscriptionDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+
+                                <div class="collapse navbar-collapse" id="subscriptionDropdown">
+                                    <ul class="navbar-nav">
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Subscriptions
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
+                                                <li class="nav-item">
+                                                    <a class="nav-link text-dark" asp-controller="Subscriptions" asp-action="Add">Add a subscriptions</a>
                                                 </li>
                                             </ul>
                                         </li>
