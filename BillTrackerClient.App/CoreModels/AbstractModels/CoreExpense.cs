@@ -45,6 +45,7 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
         }
         #endregion Subscriptions
 
+        #region Subscriptions
         protected CoreExpense(PostSubscriptionViewModel postSubscriptionViewModel, int userId)
         {
             _postSubscriptionViewModel = postSubscriptionViewModel;
@@ -54,6 +55,37 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
             _userId = userId;
             CompanyId = _postSubscriptionViewModel.CompanyId;
         }
+
+        protected CoreExpense(UpdateSubscriptionViewModel updateSubscriptionViewModel, int userId)
+        {
+            _updateSubscriptionViewModel = updateSubscriptionViewModel;
+            DateDue = _updateSubscriptionViewModel.DateDue;
+            Price = (double)_updateSubscriptionViewModel.Price;
+            _userId = userId;
+            CompanyId= _updateSubscriptionViewModel.CompanyId;
+
+            Company = new CoreCompany(CompanyId, _updateSubscriptionViewModel.CompanyText);
+        }
+
+        public CoreExpense(Subscription subscription)
+        {
+            _subscription = subscription;
+
+            _isActive = _subscription.IsActive;
+
+            if (_subscription.PaymentHistory is not null)
+            {
+                _dateDue = _subscription.PaymentHistory.DateDue;
+                _datePaid = _subscription.PaymentHistory.DatePaid;
+                _price = _subscription.PaymentHistory.Price;
+            }
+
+            if (_subscription.Company is not null)
+            {
+                Company = new CoreCompany(_subscription.Company);
+            }
+        }
+        #endregion
         #endregion
 
         #region Private Fields
@@ -63,13 +95,24 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
         private bool _isLate;
         private double _price;
         private int _userId;
+        private bool _isActive;
 
         #region Models private fields
+        #region Bills
         private readonly Bill _bill;
         private readonly PostBillViewModel _postBillViewModel;
         private readonly UpdateBillViewModel _updateBillViewModel;
-        private readonly PostSubscriptionViewModel _postSubscriptionViewModel;
         #endregion
+        #region Subscriptions
+        private readonly PostSubscriptionViewModel _postSubscriptionViewModel;
+        private readonly Subscription _subscription;
+        private readonly UpdateSubscriptionViewModel _updateSubscriptionViewModel;
+        #endregion
+        #endregion
+        #endregion
+
+        #region Protected message fields
+        protected string _idCannotBeZero = "Id cannot be less than 0";
         #endregion
 
         #region Public Properties
@@ -181,7 +224,17 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
             }
         }
 
-        public bool IsActive { get; set; }
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+            }
+        }
 
         public int UserId
         {
