@@ -2,9 +2,10 @@
 
 namespace BillTrackerClient.App.Models.PostModels.UpdateModels
 {
-    public class UpdateBillViewModel : PostBillViewModel
+    public class UpdateSubscriptionViewModel : PostSubscriptionViewModel
     {
         [NumberMustBeGreaterThanZero]
-        public int BillId { get; set; }
+        public int SubscriptionId { get; set; }
+
     }
 }
