@@ -68,7 +68,7 @@ namespace BillTrackerClient.App.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> AllBills(int? index = null, string search = null)
+        public async Task<ActionResult> AllBills([FromQuery]int? index = null, string search = null)
         {
 
             var coreBills = await _billService.GetAllBillsAsync(UserId, index, search);
