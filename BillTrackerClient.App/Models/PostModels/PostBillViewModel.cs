@@ -1,6 +1,4 @@
-﻿using BillTrackerClient.App.CustomAnnotations;
-using BillTrackerClient.App.Models.PostModels.BaseModels;
-using System;
+﻿using BillTrackerClient.App.Models.PostModels.BaseModels;
 using System.ComponentModel.DataAnnotations;
 
 namespace BillTrackerClient.App.Models.PostModels
