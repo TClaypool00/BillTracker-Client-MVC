@@ -1,10 +1,11 @@
 ﻿using BillTrackerClient.App.CustomAnnotations;
+using BillTrackerClient.App.Models.BaseModels;
 using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace BillTrackerClient.App.Models.PostModels.BaseModels
 {
-    public class PostBaseExpenseViewModel
+    public class PostBaseExpenseViewModel : BaseViewModel
     {
         public virtual double? Price { get; set; }
 
@@ -18,5 +19,8 @@ namespace BillTrackerClient.App.Models.PostModels.BaseModels
         [Display(Name = "Enter a company text")]
         [Required(ErrorMessage = "Company text is required")]
         public string CompanyText { get; set; }
+
+        [Display(Name = "Active?")]
+        public bool IsActive { get; set; }
     }
 }
