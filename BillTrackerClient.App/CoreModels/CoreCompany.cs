@@ -1,4 +1,5 @@
 ﻿using BillTrackerClient.App.CoreModels.PartialCoreModels;
+using BillTrackerClient.App.DataModels;
 using BillTrackerClient.App.Models.PostModels;
 using System;
 
@@ -8,10 +9,23 @@ namespace BillTrackerClient.App.CoreModels
     {
         private readonly PostCompanyViewModel _commentViewModel;
         private int _userId;
+        private readonly Company _company;
 
         public CoreCompany()
         {
             
+        }
+
+        public CoreCompany(Company company)
+        {
+            _company = company ?? throw new ArgumentNullException(nameof(company));
+
+            if (_company.CompanyId > 0)
+            {
+                CompanyId = _company.CompanyId;
+            }
+
+            CompanyName = _company.CompanyName;
         }
 
         public CoreCompany(PostCompanyViewModel commentViewModel, int userId)
@@ -47,6 +61,12 @@ namespace BillTrackerClient.App.CoreModels
             {
                 CompanyName = UpperCaseFirstWord(_commentViewModel.CompanyName);
             }
+        }
+
+        public CoreCompany(int id, string name)
+        {
+            CompanyId = id;
+            CompanyName = name;
         }
 
         public int UserId
