@@ -127,15 +127,7 @@
 
                 if (checkbox.type.toLowerCase() == 'checkbox') {
                     checkbox.addEventListener('change', function (e) {
-                        let message = 'Are you sure you wish to make this bill ';
-
-                        if (this.checked) {
-                            message += 'active';
-                        } else {
-                            message += 'inactive';
-                        }
-
-                        message += '?';
+                        let message = toggleConfirmMessage('bill', this.checked);
 
                          if (confirm(message)) {
                             this.disabled = true;
@@ -160,7 +152,7 @@
                                 },
                                 error: function (err) {
                                     displayErrorMessage(err);
-                                    checkbox.checked !checkbox.checked;
+                                    checkbox.checked = !checkbox.checked;
                                 }
                             });
 
@@ -196,6 +188,8 @@
                 contentType: "application/json",
                 dataType: "JSON",
                 success: function(data) {
+                    btnUpdateBill.disabled = true;
+
                     $('#exampleModal').modal('hide');
 
                     const index = Number(inputs[0].value);
@@ -215,6 +209,8 @@
                     displayErrorMessage(err);
                 }
             });
+
+            btnUpdateBill.disabled = false;
         })
     </script>
 }
