@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Security.Claims;
 
@@ -81,6 +80,16 @@ namespace BillTrackerClient.App.Controllers
         {
             Response.StatusCode = (int)HttpStatusCode.OK;
             return Json(message);
+        }
+        #endregion
+
+        #region Public messages properties
+        public string UnAuthMessage
+        {
+            get
+            {
+                return "You do not have access to this resource";
+            }
         }
         #endregion
     }
