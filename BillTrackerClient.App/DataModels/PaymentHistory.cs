@@ -53,18 +53,23 @@ namespace BillTrackerClient.App.DataModels
         public int? BillId { get; set; }
         public virtual Bill Bill { get; set; }
 
+        [Column(Order = 2)]
         public int? SubscriptionId { get; set; }
         public virtual Subscription Subscription { get; set; }
 
+        [Column(Order = 3)]
+        public int? LoanId { get; set; }
+        public virtual Loan Loan { get; set; }
+
         [Required]
         [Range(0.1, double.MaxValue)]
-        [Column(Order = 2)]
+        [Column(Order = 4)]
         public double Price { get; set; }
 
-        [Column(Order = 3)]
+        [Column(Order = 5)]
         public DateTime DateDue { get; set; }
 
-        [Column(Order = 4)]
+        [Column(Order = 6)]
         public DateTime? DatePaid { get; set; }
         #endregion
     }
