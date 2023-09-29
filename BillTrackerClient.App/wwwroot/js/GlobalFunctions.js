@@ -31,3 +31,17 @@ function clearFormValues(formId) {
         item.value = '';
     }
 }
+
+function toggleConfirmMessage(model, isActive) {
+    let message = `Are you sure you wish to make this ${model} `;
+
+    if (isActive) {
+        message += 'active';
+    } else {
+        message += 'inactive';
+    }
+
+    message += '?';
+
+    return message;
+}
