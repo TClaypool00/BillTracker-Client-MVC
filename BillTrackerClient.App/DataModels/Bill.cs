@@ -26,6 +26,7 @@ namespace BillTrackerClient.App.DataModels
             BillName = _coreBill.BillName;
             UserId = _coreBill.UserId;
             CompanyId = _coreBill.CompanyId;
+            IsActive = _coreBill.IsActive;
         }
         #endregion
 

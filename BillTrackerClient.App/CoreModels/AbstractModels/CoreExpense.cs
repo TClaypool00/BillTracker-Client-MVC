@@ -32,6 +32,7 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
             Price = (double)_postBillViewModel.Price;
             _userId = userId;
             CompanyId = _postBillViewModel.CompanyId;
+            IsActive = true;
         }
 
         protected CoreExpense(Bill bill)
