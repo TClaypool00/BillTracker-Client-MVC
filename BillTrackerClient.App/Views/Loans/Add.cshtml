@@ -6,3 +6,84 @@
 
 <h1>@ViewData["Title"]</h1>
 <hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" id="formAddLoan">
+            <div class="form-group">
+                <input asp-for="LoanName" class="form-control" placeholder="@Html.DisplayNameFor(m => m.LoanName)" />
+                <span asp-validation-for="LoanName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="Price" class="form-control" placeholder="@Html.DisplayNameFor(m => m.Price)" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="TotalAmountOwed" class="form-control" placeholder="@Html.DisplayNameFor(m => m.TotalAmountOwed)" />
+                <span asp-validation-for="TotalAmountOwed" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="DateDue" class="form-control" />
+                <span asp-validation-for="DateDue" class="text-danger"></span>
+            </div>
+
+            <partial name="~/Views/Shared/_CreateCompany.cshtml" />
+
+            <div class="form-group">
+                <button id="btnAddLoan" class="btn btn-primary" type="button">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        const formId = 'formAddLoan';
+
+        const form = document.getElementById(formId);
+        const btnAddLoan = document.getElementById('btnAddLoan');
+        const inputs = form.getElementsByTagName('input');
+
+        btnAddLoan.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.disabled = true;
+
+            clearMessages();
+
+            const model = {
+                loanName : inputs[0].value,
+                price: inputs[1].value,
+                totalAmountOwed : inputs[2].value,
+                dateDue: inputs[3].value,
+                companyText: inputs[4].value
+            };
+
+            console.log(JSON.stringify(model));
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Add")',
+                data: JSON.stringify(model),
+                contentType: "application/json",
+                dataType: "JSON",
+                success: function (resp) {
+                    if (confirm('Do you wish to add another loan?')) {
+                        clearFormValues(formId);
+
+                        successMessage.innerHTML = resp;
+                        inputs[0].focus();
+                    } else {
+                        window.location = '@Url.Action("Index", "Home")';
+                    }
+                },
+                error : function(err) {
+                    displayErrorMessage(err);
+                }
+            });
+
+            this.disabled = false;
+        });
+    </script>
+}

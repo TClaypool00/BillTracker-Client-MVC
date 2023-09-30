@@ -42,13 +42,15 @@ namespace BillTrackerClient.App.Services
                 {
                     var payHistory = new PaymentHistory(coreLoan);
 
-                    await _context.Loans.AddAsync(loan);
+                    await _context.PaymentHistories.AddAsync(payHistory);
                     await SaveAsync();
                 }
                 catch (Exception)
                 {
-                    _context.Loans.Remove(loan);
+                    _context.Entry(loan).State = EntityState.Deleted;
                     await SaveAsync();
+
+                    throw;
                 }
             }
             catch (Exception)
@@ -181,7 +183,7 @@ namespace BillTrackerClient.App.Services
             }
             catch (Exception)
             {
-
+                throw;
             }
         }
 
