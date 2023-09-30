@@ -1,18 +1,43 @@
 ﻿using BillTrackerClient.App.CoreModels.AbstractModels;
 using BillTrackerClient.App.DataModels;
+using BillTrackerClient.App.Models.PostModels;
+using BillTrackerClient.App.Models.PostModels.UpdateModels;
 using System;
 
 namespace BillTrackerClient.App.CoreModels
 {
     public class CoreLoan : CoreExpense
     {
-        #region Private fields
-        #region Model fields
-        private readonly Loan _loan;
-        #endregion
-        #endregion
-
         #region Constructors
+        public CoreLoan()
+        {
+
+        }
+
+        public CoreLoan(PostLoanViewModel postLoanViewModel, int userId) : base(postLoanViewModel, userId)
+        {
+            _postLoanViewModel = postLoanViewModel;
+
+            LoanName = _postLoanViewModel.LoanName;
+            TotalAmountOwed = (double)_postLoanViewModel.TotalAmountOwed;
+        }
+
+        public CoreLoan(UpdateLoanViewModel updateLoanViewModel, int userId) : base(updateLoanViewModel, userId)
+        {
+            _updateLoanViewModel = updateLoanViewModel;
+
+            if (_updateLoanViewModel.LoanId > 0)
+            {
+                LoanId = _updateLoanViewModel.LoanId;
+            }
+            else
+            {
+                throw new ApplicationException(_idCannotBeZero);
+            }
+
+            LoanName = _updateLoanViewModel.LoanName;
+        }
+
         public CoreLoan(Loan loan)
         {
             _loan = loan ?? throw new Exception(nameof(loan));

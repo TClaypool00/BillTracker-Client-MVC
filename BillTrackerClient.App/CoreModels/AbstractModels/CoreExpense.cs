@@ -47,6 +47,31 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
         #endregion Subscriptions
 
         #region Loans
+        public CoreExpense(PostLoanViewModel postLoanViewModel, int userId)
+        {
+            _postLoanViewModel = postLoanViewModel ?? throw new ArgumentNullException(nameof(postLoanViewModel));
+
+            IsActive = true;
+            DateDue = _postLoanViewModel.DateDue;
+            Price = (double)_postLoanViewModel.Price;
+            _userId = userId;
+            CompanyId = _postLoanViewModel.CompanyId;
+        }
+
+        public CoreExpense(UpdateLoanViewModel updateLoanViewModel, int userId)
+        {
+            _updateLoanViewModel = updateLoanViewModel ?? throw new ArgumentNullException(nameof(updateLoanViewModel));
+
+            DateDue = _updateLoanViewModel.DateDue;
+            Price = (double)_updateLoanViewModel.Price;
+            _userId = userId;
+            CompanyId = _updateLoanViewModel.CompanyId;
+            IsActive = _updateLoanViewModel.IsActive;
+
+            Company = new CoreCompany(CompanyId, _updateLoanViewModel.CompanyText);
+
+        }
+
         protected CoreExpense(Loan loan)
         {
             _loan = loan ?? throw new ArgumentNullException(nameof(loan));
@@ -131,7 +156,9 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
         private readonly UpdateSubscriptionViewModel _updateSubscriptionViewModel;
         #endregion
         #region Loans
-        private readonly Loan _loan;
+        protected PostLoanViewModel _postLoanViewModel;
+        protected UpdateLoanViewModel _updateLoanViewModel;
+        protected Loan _loan;
         #endregion
         #endregion
         #endregion
