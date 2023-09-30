@@ -30,7 +30,7 @@ namespace BillTrackerClient.App.DataModels
             }
 
             SubscriptionName = _coreSubscription.SubscriptionName;
-            IsActive = true;
+            IsActive = _coreSubscription.IsActive;
             UserId = _coreSubscription.UserId;
             CompanyId = _coreSubscription.CompanyId;
         }
