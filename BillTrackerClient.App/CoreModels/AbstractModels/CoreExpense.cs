@@ -39,9 +39,22 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
         {
             _bill = bill ?? throw new ArgumentNullException(nameof(bill));
 
+            DateCreated = _bill.DateCreated;
+            IsActive = _bill.IsActive;
+
             if (_bill.PaymentHistory is not null)
             {
+                Price = _bill.PaymentHistory.Price;
+                DateDue = _bill.PaymentHistory.DateDue;
+                DatePaid = _bill.PaymentHistory.DatePaid;
+            }
 
+            if (_bill.Company is not null)
+            {
+                Company = new CoreCompany
+                {
+                    CompanyName = _bill.Company.CompanyName
+                };
             }
         }
         #endregion Subscriptions
@@ -95,7 +108,7 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
         #region Subscriptions
         protected CoreExpense(PostSubscriptionViewModel postSubscriptionViewModel, int userId)
         {
-            _postSubscriptionViewModel = postSubscriptionViewModel;
+            _postSubscriptionViewModel = postSubscriptionViewModel ?? throw new ArgumentNullException(nameof(postSubscriptionViewModel));
 
             DateDue = _postSubscriptionViewModel.DateDue;
             Price = (double)_postSubscriptionViewModel.Price;
@@ -105,7 +118,7 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
 
         protected CoreExpense(UpdateSubscriptionViewModel updateSubscriptionViewModel, int userId)
         {
-            _updateSubscriptionViewModel = updateSubscriptionViewModel;
+            _updateSubscriptionViewModel = updateSubscriptionViewModel ?? throw new ArgumentNullException(nameof(updateSubscriptionViewModel);
             DateDue = _updateSubscriptionViewModel.DateDue;
             Price = (double)_updateSubscriptionViewModel.Price;
             _userId = userId;
@@ -116,7 +129,7 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
 
         public CoreExpense(Subscription subscription)
         {
-            _subscription = subscription;
+            _subscription = subscription ?? throw new ArgumentNullException(nameof(subscription));
 
             _isActive = _subscription.IsActive;
 
@@ -146,14 +159,14 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
 
         #region Models private fields
         #region Bills
-        private readonly Bill _bill;
-        private readonly PostBillViewModel _postBillViewModel;
-        private readonly UpdateBillViewModel _updateBillViewModel;
+        protected Bill _bill;
+        protected PostBillViewModel _postBillViewModel;
+        protected UpdateBillViewModel _updateBillViewModel;
         #endregion
         #region Subscriptions
-        private readonly PostSubscriptionViewModel _postSubscriptionViewModel;
-        private readonly Subscription _subscription;
-        private readonly UpdateSubscriptionViewModel _updateSubscriptionViewModel;
+        protected PostSubscriptionViewModel _postSubscriptionViewModel;
+        protected Subscription _subscription;
+        protected UpdateSubscriptionViewModel _updateSubscriptionViewModel;
         #endregion
         #region Loans
         protected PostLoanViewModel _postLoanViewModel;

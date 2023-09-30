@@ -16,16 +16,12 @@ namespace BillTrackerClient.App.CoreModels
 
         public CoreLoan(PostLoanViewModel postLoanViewModel, int userId) : base(postLoanViewModel, userId)
         {
-            _postLoanViewModel = postLoanViewModel;
-
             LoanName = _postLoanViewModel.LoanName;
             TotalAmountOwed = (double)_postLoanViewModel.TotalAmountOwed;
         }
 
         public CoreLoan(UpdateLoanViewModel updateLoanViewModel, int userId) : base(updateLoanViewModel, userId)
         {
-            _updateLoanViewModel = updateLoanViewModel;
-
             if (_updateLoanViewModel.LoanId > 0)
             {
                 LoanId = _updateLoanViewModel.LoanId;
@@ -38,10 +34,8 @@ namespace BillTrackerClient.App.CoreModels
             LoanName = _updateLoanViewModel.LoanName;
         }
 
-        public CoreLoan(Loan loan)
+        public CoreLoan(Loan loan) : base(loan)
         {
-            _loan = loan ?? throw new Exception(nameof(loan));
-
             if (_loan.LoanId > 0)
             {
                 LoanId = _loan.LoanId;
