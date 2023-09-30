@@ -35,12 +35,23 @@ namespace BillTrackerClient.App.DataModels
             DatePaid = _coreSubscription.DatePaid;
             SubscriptionId = _coreSubscription.SubscriptionId;
         }
+
+        public PaymentHistory(CoreLoan coreLoan)
+        {
+            _coreLoan = coreLoan ?? throw new ArgumentNullException(nameof(coreLoan));
+
+            DateDue = _coreLoan.DateDue;
+            Price = _coreLoan.Price;
+            DatePaid = _coreLoan.DatePaid;
+            LoanId = _coreLoan.LoanId;
+        }
         #endregion
 
         #region Private fields
         #region Data Models private fields
         private readonly CoreBill _coreBill;
         private readonly CoreSubscription _coreSubscription;
+        private readonly CoreLoan _coreLoan;
         #endregion
         #endregion
 
