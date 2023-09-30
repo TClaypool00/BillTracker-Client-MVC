@@ -18,6 +18,8 @@ namespace BillTrackerClient.App.Models.BaseModels
 
         [Display(Name = "Date Due")]
         public string DateDueString { get; set; }
+
+        public string Message { get; set; }
         #endregion
     }
 }
