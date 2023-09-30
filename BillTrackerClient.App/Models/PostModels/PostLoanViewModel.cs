@@ -1,4 +1,5 @@
-﻿using BillTrackerClient.App.Models.PostModels.BaseModels;
+﻿using BillTrackerClient.App.CustomAnnotations;
+using BillTrackerClient.App.Models.PostModels.BaseModels;
 using System.ComponentModel.DataAnnotations;
 
 namespace BillTrackerClient.App.Models.PostModels
@@ -13,6 +14,7 @@ namespace BillTrackerClient.App.Models.PostModels
         [Display(Name = "Monthly amount")]
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "Monthly amount is requried")]
+        [PriceCannotBeGreaterThanTotalOwed]
         public override double? Price { get => base.Price; set => base.Price = value; }
 
         [Display(Name = "Total amount due")]
