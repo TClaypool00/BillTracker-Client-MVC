@@ -14,5 +14,10 @@ namespace BillTrackerClient.App.Models.PostModels
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "Monthly amount is requried")]
         public override double? Price { get => base.Price; set => base.Price = value; }
+
+        [Display(Name = "Total amount due")]
+        [DataType(DataType.Currency)]
+        [Required(ErrorMessage = "Total amount due is requried")]
+        public double? TotalAmountOwed { get; set; }
     }
 }
