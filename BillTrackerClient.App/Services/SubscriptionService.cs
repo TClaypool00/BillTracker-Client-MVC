@@ -32,7 +32,7 @@ namespace BillTrackerClient.App.Services
 
                 if (dataSubscription.SubscriptionId == 0)
                 {
-                    throw new ApplicationException(CouldNotAddMessage(_modelString));
+                    throw new ApplicationException(CouldNotAddMessage());
                 }
 
                 coreSubscription.SubscriptionId = dataSubscription.SubscriptionId;
@@ -117,7 +117,7 @@ namespace BillTrackerClient.App.Services
 
         public string SubscriptionAlreadyExistsMessage(string subscriptionName)
         {
-            return ModelAlreadyExistsMessage(_modelString, subscriptionName);
+            return ModelAlreadyExistsMessage(subscriptionName);
         }
 
         public Task<bool> SubscriptionExistsAsync(string subscriptionName, int userId, int? id = null)

@@ -12,6 +12,7 @@ namespace BillTrackerClient.App.Services
         protected readonly string _modelString;
         protected readonly IConfiguration _configuration;
         protected readonly int _standardTakeValue;
+        protected readonly string _cannotUseMethod = "Cannot use this method";
 
         protected int _index;
 
@@ -53,21 +54,35 @@ namespace BillTrackerClient.App.Services
             }
         }
 
-        protected string CouldNotAddMessage(string model)
+        protected string CouldNotAddMessage()
         {
-            return $"{model} could not be added";
+            if (string.IsNullOrWhiteSpace(_modelString))
+            {
+                throw new ApplicationException(_cannotUseMethod);
+            }
+            else
+            {
+                return $"{_modelString} could not be added";
+            }
         }
 
-        public string ModelAlreadyExistsMessage(string model, string name)
+        public string ModelAlreadyExistsMessage(string name)
         {
-            return $"A {model} with the name {name} aready exists.";
+            if (string.IsNullOrEmpty(_modelString))
+            {
+                throw new ApplicationException(_cannotUseMethod);
+            }
+            else
+            {
+                return $"A {_modelString} with the name {name} aready exists.";
+            }
         }
 
         protected string ToggleIsActiveMssage(bool isActive)
         {
             if (string.IsNullOrEmpty(_modelString))
             {
-                throw new ApplicationException("Cannot use this method");
+                throw new ApplicationException(_cannotUseMethod);
             }
             else
             {
