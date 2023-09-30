@@ -31,6 +31,7 @@ namespace BillTrackerClient.App.DataModels
             }
 
             LoanName = _coreLoan.LoanName;
+            TotalAmountOwed = _coreLoan.TotalAmountOwed;
             IsActive = _coreLoan.IsActive;
             UserId = _coreLoan.UserId;
             CompanyId = _coreLoan.CompanyId;

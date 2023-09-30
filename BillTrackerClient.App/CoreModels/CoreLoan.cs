@@ -23,6 +23,7 @@ namespace BillTrackerClient.App.CoreModels
             }
 
             LoanName = _loan.LoanName;
+            TotalAmountOwed = _loan.TotalAmountOwed;
         }
         #endregion
 
@@ -30,6 +31,8 @@ namespace BillTrackerClient.App.CoreModels
         public int LoanId { get; set; }
 
         public string LoanName { get; set; }
+
+        public double TotalAmountOwed { get; set; }
         #endregion
     }
 }
