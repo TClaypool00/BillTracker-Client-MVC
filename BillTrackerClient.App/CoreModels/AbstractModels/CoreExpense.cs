@@ -118,7 +118,7 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
 
         protected CoreExpense(UpdateSubscriptionViewModel updateSubscriptionViewModel, int userId)
         {
-            _updateSubscriptionViewModel = updateSubscriptionViewModel ?? throw new ArgumentNullException(nameof(updateSubscriptionViewModel);
+            _updateSubscriptionViewModel = updateSubscriptionViewModel ?? throw new ArgumentNullException(nameof(updateSubscriptionViewModel));
             DateDue = _updateSubscriptionViewModel.DateDue;
             Price = (double)_updateSubscriptionViewModel.Price;
             _userId = userId;
