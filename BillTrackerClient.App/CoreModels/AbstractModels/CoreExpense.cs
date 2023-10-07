@@ -13,6 +13,17 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
 
         }
 
+        public CoreExpense(Expense expense)
+        {
+            _expense = expense ?? throw new ArgumentNullException(nameof(expense));
+
+            if (_expense.PaymentHistory is not null)
+            {
+                DateDue = _expense.PaymentHistory.DateDue;
+                Price = _expense.PaymentHistory.Price;
+            }
+        }
+
         #region Bills
         public CoreExpense(UpdateBillViewModel updateBillViewModel, int userId)
         {
@@ -158,6 +169,8 @@ namespace BillTrackerClient.App.CoreModels.AbstractModels
         private bool _isActive;
 
         #region Models private fields
+        protected Expense _expense;
+
         #region Bills
         protected Bill _bill;
         protected PostBillViewModel _postBillViewModel;
