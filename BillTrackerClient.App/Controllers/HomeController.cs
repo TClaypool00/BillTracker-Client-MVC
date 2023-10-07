@@ -1,8 +1,11 @@
-﻿using BillTrackerClient.App.Models;
+﻿using BillTrackerClient.App.Interfaces;
+using BillTrackerClient.App.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace BillTrackerClient.App.Controllers
 {
@@ -10,18 +13,28 @@ namespace BillTrackerClient.App.Controllers
     public class HomeController : ControllerHelper
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IAllService _allService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IAllService allService)
         {
             _logger = logger;
+            _allService = allService;
         }
-        
+
         [HttpGet]
-        public IActionResult Index()
+        public ActionResult Index()
         {
             GetTempSuccessMessage();
 
-            return View();
+            var expenses = _allService.GetAllExpensesAsync(UserId);
+            var viewModels = new List<ExpenseViewModel>();
+
+            for (int i = 0; i < expenses.Count; i++)
+            {
+                viewModels.Add(new ExpenseViewModel(expenses[i]));
+            }
+
+            return View(viewModels);
         }
 
         public IActionResult Privacy()

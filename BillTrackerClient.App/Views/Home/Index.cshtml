@@ -1,9 +1,133 @@
-﻿@{
+﻿@model IEnumerable<BillTrackerClient.App.Models.ExpenseViewModel>
+@{
     ViewData["Title"] = "Home";
 }
 
 <div class="text-center">
-    <h1 class="display-4">
-        @ViewData["Title"]
-    </h1>
+    <div class="d-flex align-items-center justify-content-center">
+        <div class="row">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Bills</h5>
+                </div>
+                <div class="col-md-6">
+                    <a asp-controller="Bills" asp-action="AllBills" class="btn btn-primary">My bills</a>
+                </div>
+            </div>
+            <table id="tableBills" class="table mb-10">
+                <thead>
+                    <tr>
+                        <th scope="col">@Html.DisplayNameFor(m => m.Name)</th>
+                        <th scope="col">@Html.DisplayNameFor(m => m.Price)</th>
+                        <th scope="col">@Html.DisplayNameFor(m => m.DateDue)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="tableBodyBills">
+                    @if (Model.Where(m => m.Type == BillTrackerClient.App.DataModels.Expense.ExpenseType.Bill).Count() > 0)
+                    {
+                        foreach (var item in Model.Where(m => m.Type == BillTrackerClient.App.DataModels.Expense.ExpenseType.Bill))
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Price</td>
+                                <td>@item.DateDue</td>
+                                <td>
+                                    <a asp-controller="Bills" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <th colspan="3">No bills</th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Loans</h5>
+                </div>
+                <div class="col-md-6">
+                    <a asp-controller="Loans" asp-action="AllLoans" class="btn btn-primary">My loans</a>
+                </div>
+            </div>
+            <table id="tableLoans" class="table mb-10">
+                <thead>
+                    <tr>
+                        <th scope="col">@Html.DisplayNameFor(m => m.Name)</th>
+                        <th scope="col">@Html.DisplayNameFor(m => m.Price)</th>
+                        <th scope="col">@Html.DisplayNameFor(m => m.DateDue)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="tableBodyLoans">
+                    @if (Model.Where(m => m.Type == BillTrackerClient.App.DataModels.Expense.ExpenseType.Loan).Count() > 0)
+                    {
+                        foreach (var item in Model.Where(m => m.Type == BillTrackerClient.App.DataModels.Expense.ExpenseType.Loan))
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Price</td>
+                                <td>@item.DateDue</td>
+                                <td>
+                                    <a asp-controller="Loans" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <th colspan="3">No Loans</th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Subscriptions</h5>
+                </div>
+                <div class="col-md-6">
+                    <a asp-controller="Subscriptions" asp-action="AllSubscriptions" class="btn btn-primary">My subscriptions</a>
+                </div>
+            </div>
+            <table id="tableSubscriptions" class="table mb-10">
+                <thead>
+                    <tr>
+                        <th scope="col">@Html.DisplayNameFor(m => m.Name)</th>
+                        <th scope="col">@Html.DisplayNameFor(m => m.Price)</th>
+                        <th scope="col">@Html.DisplayNameFor(m => m.DateDue)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="tableBodySubscriptions">
+                    @if (Model.Where(m => m.Type == BillTrackerClient.App.DataModels.Expense.ExpenseType.Subscription).Count() > 0)
+                    {
+                        foreach (var item in Model.Where(m => m.Type == BillTrackerClient.App.DataModels.Expense.ExpenseType.Subscription))
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Price</td>
+                                <td>@item.DateDue</td>
+                                <td>
+                                    <a asp-controller="Subscriptions" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <th colspan="3">No Subscriptons</th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
