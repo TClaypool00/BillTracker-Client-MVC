@@ -32,6 +32,7 @@ namespace BillTrackerClient.App
             });
 
             //Services
+            services.AddScoped<IAllService, AllService>();
             services.AddScoped<IBillService, BillService>();
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<ILoanService, LoanService>();
