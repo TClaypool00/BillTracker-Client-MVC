@@ -12,6 +12,7 @@ namespace BillTrackerClient.App.Services
         protected readonly string _modelString;
         protected readonly IConfiguration _configuration;
         protected readonly int _standardTakeValue;
+        protected readonly int _smallTakeValue;
         protected readonly string _cannotUseMethod = "Cannot use this method";
 
         protected int _index;
@@ -27,6 +28,7 @@ namespace BillTrackerClient.App.Services
             _modelString = modelName;
             _configuration = configuration;
             _standardTakeValue = int.Parse(_configuration.GetSection("TakeValues").GetSection("Standard").Value);
+            _smallTakeValue = int.Parse(_configuration.GetSection("TakeValues").GetSection("Small").Value);
         }
 
         protected async Task SaveAsync()
