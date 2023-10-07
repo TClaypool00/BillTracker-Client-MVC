@@ -90,3 +90,8 @@ body {
     display: block;
     cursor: pointer;
 }
+
+/* Bootstrap classes extensions */
+.mb-10 {
+    margin-bottom: 10%;
+}
